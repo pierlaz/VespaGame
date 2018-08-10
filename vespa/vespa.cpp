@@ -82,7 +82,7 @@ void Vespa::Init() {
     velSterzo = 2.0;         // A
     velRitornoSterzo = 0.93; // B, sterzo massimo = A*B / (1-B)
 
-    accMax = 0.0415;
+    accMax = 0.0015;
 
     // attriti: percentuale di velocita' che viene mantenuta
     // 1 = no attrito
