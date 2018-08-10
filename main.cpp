@@ -90,6 +90,9 @@ extern void drawQuestionMarks();
 
 extern void drawBillboard();
 
+extern void drawBillboardPoster();
+
+
 //extern void drawCube(bool useShadow, bool useWireframe);
 
 
@@ -122,6 +125,7 @@ void SetCoordToPixel() {
     glScalef(2.0 / scrW, 2.0 / scrH, 1);
 }
 
+
 bool LoadTexture(int textbind, char *filename) {
     GLenum texture_format;
 
@@ -153,7 +157,7 @@ bool LoadTexture(int textbind, char *filename) {
             GL_UNSIGNED_BYTE,
             s->pixels
     );
-    glTexParameteri(
+    /*glTexParameteri(
             GL_TEXTURE_2D,
             GL_TEXTURE_MAG_FILTER,
             GL_LINEAR);
@@ -161,7 +165,7 @@ bool LoadTexture(int textbind, char *filename) {
             GL_TEXTURE_2D,
             GL_TEXTURE_MIN_FILTER,
             GL_LINEAR_MIPMAP_LINEAR);
-    /* glTexParameteri(
+     glTexParameteri(
              GL_TEXTURE_2D,
              GL_TEXTURE_WRAP_S,
              GL_REPEAT);
@@ -1020,7 +1024,6 @@ void rendering(SDL_Window *win) {
 //drawAxis(); // disegna assi frame VISTA
 
 
-
 //di regola prima trasla e poi ruota la camera
 
     glLoadIdentity();
@@ -1039,6 +1042,9 @@ void rendering(SDL_Window *win) {
     // setto la posizione luce
     float tmpv[4] = {0, 10, 0, 0}; // ultima comp=0 => luce direzionale
     glLightfv(GL_LIGHT0, GL_POSITION, tmpv);
+
+    drawBillboardPoster();
+
 
     drawStrada(); // disegna il suolo
     drawFuoriStrada();
@@ -1380,7 +1386,7 @@ int main(int argc, char *argv[]) {
     if (!LoadTexture(10, (char *) "images/rock.jpg")) return 0;
     if (!LoadTexture(11, (char *) "images/question.jpg")) return 0;
     if (!LoadTexture(12, (char *) "images/billboard.jpg")) return 0;
-    if (!LoadTexture(13, (char *) "images/poster.jpg")) return 0;
+    if (!LoadTexture(13, (char *) "images/miafoto.jpg")) return 0;
 
 
     loadTextureSky(20, (char *) "images/skybox/back.png");

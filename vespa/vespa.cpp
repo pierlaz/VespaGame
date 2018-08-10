@@ -209,13 +209,13 @@ void drawBillboardPoster()
 {
 
 
-   /* float billboardPoster[4][3] =
-            {
-                    {270.5, 28.2, 147.8}, // lower sx vertex
-                    {230, 28.2, 147.8},   // lower dx vertex
-                    {270.5, 45.7, 147.8}, // higher sx vertex
-                    {230, 45.7, 147.8},   // higher dx vertex
-            };*/
+//   float billboardPoster[4][3] =
+//            {
+//                    {270.5, 28.2, 147.8}, // lower sx vertex
+//                    {230, 28.2, 147.8},   // lower dx vertex
+//                    {270.5, 45.7, 147.8}, // higher sx vertex
+//                    {230, 45.7, 147.8},   // higher dx vertex
+//            };
 
     float billboardPoster[4][3] =
             {
@@ -228,6 +228,7 @@ void drawBillboardPoster()
     glPushMatrix();
   //  glDisable(GL_COLOR_MATERIAL);
     glEnable(GL_TEXTURE_2D);
+    glColor4f(1,1,1,1);
     glBindTexture(GL_TEXTURE_2D, 13);
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); // render original colors of the texture
     glBegin(GL_QUADS);
@@ -247,9 +248,9 @@ void drawBillboardPoster()
 
 
     glPopMatrix();
-
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); // back to the default value of GL_TEXTURE_ENV_MODE
 }
+
 
 void drawBillboard(){
     glPushMatrix();
@@ -264,7 +265,7 @@ void drawBillboard(){
     glEnable(GL_LIGHTING);
 
     //glPushMatrix();
-    drawBillboardPoster();
+
    // glPopMatrix();
 }
 
