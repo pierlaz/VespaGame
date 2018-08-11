@@ -6,9 +6,6 @@ using namespace std;
 
 #include <GL/glut.h>
 
-//#include <GL/glew.h>
-//#include <SDL2/SDL.h>
-
 #ifdef __APPLE__
 #include <SDL2_image/SDL_image.h>
 #include <OpenGL/gl.h>
@@ -28,12 +25,11 @@ using namespace std;
 #include "text/GLText.h"
 
 
-#define CAMERA_BACK_CAR 0
-#define CAMERA_TOP_FIXED 1
-#define CAMERA_TOP_CAR 2
-#define CAMERA_PILOT 3
-#define CAMERA_MOUSE 4
-#define CAMERA_TYPE_MAX 5
+#define CAMERA_BACK_CAR 3
+#define CAMERA_TOP_CAR 1
+#define CAMERA_PILOT 2
+#define CAMERA_MOUSE 0
+#define CAMERA_TYPE_MAX 4
 
 #define FINE_STRADA 10
 #define SIZE_FLOOR 250
@@ -41,23 +37,11 @@ using namespace std;
 
 #define ZROCCIA 215
 
-
-enum {
-    SKY_LEFT = 0,
-    SKY_BACK,
-    SKY_RIGHT,
-    SKY_FRONT,
-    SKY_TOP,
-    SKY_BOTTOM
-};                      //constants for the skybox faces, so we don't have to remember so much number
-unsigned int skybox[6]; //the ids for the textures
-
-
+//vari font
 TTF_Font *font;
 TTF_Font *font26;
 TTF_Font *font20;
 TTF_Font *font17;
-
 
 GLText *scoreDynamic = new GLText(32);
 GLText *textMenu = new GLText(18);
@@ -65,7 +49,6 @@ GLText *textMenu = new GLText(18);
 SDL_Color colorRed = {255, 0, 0, 0};
 SDL_Color colorBlack = {0, 0, 0, 0};
 SDL_Color colorWhite = {255, 255, 255, 255};
-
 
 float viewAlpha = 0, viewBeta = 20; // angoli che definiscono la vista
 float eyeDist = 5.0; // distanza dell'occhio dall'origine
@@ -78,6 +61,7 @@ bool useSabbiaTempesta = false;
 
 double record = 1000.0; //record letto da file inizializzato a un valore altissimo
 
+//array di mesh
 Mesh rocce[100];
 
 extern void drawLineaStradale();
@@ -92,18 +76,11 @@ extern void drawBillboard();
 
 extern void drawBillboardPoster();
 
-
-//extern void drawCube(bool useShadow, bool useWireframe);
-
-
-
 int cameraType = 0;
 Vespa vespa; // la nostra macchina
 
 int nstep = 0; // numero di passi di FISICA fatti fin'ora
 const int PHYS_SAMPLING_STEP = 10; // numero di millisec che un passo di fisica simula
-
-
 
 // Frames Per Seconds
 const int fpsSampling = 3000; // lunghezza intervallo di calcolo fps
@@ -113,9 +90,7 @@ Uint32 timeLastInterval = 0; // quando e' cominciato l'ultimo intervallo
 double tempoPercorso = 0.0; //tempoPercorso finali per il time-attack
 
 
-// setta le matrici di trasformazione in modo
-// che le coordinate in spazio oggetto siano le coord 
-// del pixel sullo schemo
+// setta le matrici di trasformazione in modo che le coordinate in spazio oggetto siano le coord del pixel sullo schemo
 void SetCoordToPixel() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -125,7 +100,7 @@ void SetCoordToPixel() {
     glScalef(2.0 / scrW, 2.0 / scrH, 1);
 }
 
-
+// funzione che carica la testure
 bool LoadTexture(int textbind, char *filename) {
     GLenum texture_format;
 
@@ -157,60 +132,10 @@ bool LoadTexture(int textbind, char *filename) {
             GL_UNSIGNED_BYTE,
             s->pixels
     );
-    /*glTexParameteri(
-            GL_TEXTURE_2D,
-            GL_TEXTURE_MAG_FILTER,
-            GL_LINEAR);
-    glTexParameteri(
-            GL_TEXTURE_2D,
-            GL_TEXTURE_MIN_FILTER,
-            GL_LINEAR_MIPMAP_LINEAR);
-     glTexParameteri(
-             GL_TEXTURE_2D,
-             GL_TEXTURE_WRAP_S,
-             GL_REPEAT);
-     glTexParameteri(
-             GL_TEXTURE_2D,
-             GL_TEXTURE_WRAP_T,
-             GL_REPEAT);*/
-
     return true;
 }
 
-// disegna gli assi nel sist. di riferimento
-void drawAxis() {
-    glPushMatrix();
-    const float K = 0.10;
-    glColor3f(0, 0, 1);
-    glBegin(GL_LINES);
-    glVertex3f(-1, 0, 0);
-    glVertex3f(+1, 0, 0);
-
-    glVertex3f(0, -1, 0);
-    glVertex3f(0, +1, 0);
-
-    glVertex3f(0, 0, -1);
-    glVertex3f(0, 0, +1);
-    glEnd();
-
-    glBegin(GL_TRIANGLES);
-    glVertex3f(0, +1, 0);
-    glVertex3f(K, +1 - K, 0);
-    glVertex3f(-K, +1 - K, 0);
-
-    glVertex3f(+1, 0, 0);
-    glVertex3f(+1 - K, +K, 0);
-    glVertex3f(+1 - K, -K, 0);
-
-    glVertex3f(0, 0, +1);
-    glVertex3f(0, +K, +1 - K);
-    glVertex3f(0, -K, +1 - K);
-    glEnd();
-    glColor3f(1, 1, 1);
-    glPopMatrix();
-
-}
-
+// funzione che disegna lo skybox
 void drawSkybox(float size) {
     glPushMatrix();
     bool b1 = glIsEnabled(GL_TEXTURE_2D); //new, we left the textures turned on, if it was turned on
@@ -295,6 +220,7 @@ void drawSkybox(float size) {
     glPopMatrix();
 }
 
+// carica texture per skybox
 bool loadTextureSky(int textbind, char *filename) {
     GLenum texture_format;
 
@@ -344,22 +270,19 @@ bool loadTextureSky(int textbind, char *filename) {
     return true;
 }
 
+// disegno la strada
 void drawStrada() {
     if (!useWireframe) {
         const float S = SIZE_FLOOR;
         const float H = 0;
         const int K = K_FLOOR;
-
-        /* disegno il terreno ripetendo una texture su di esso */
+        // disegno il terreno ripetendo una texture su di esso
         glBindTexture(GL_TEXTURE_2D, 6);
-        // glColor3f(1,1,0);
         glEnable(GL_TEXTURE_2D);
         glDisable(GL_TEXTURE_GEN_S);
         glDisable(GL_TEXTURE_GEN_T);
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-        // glColor3ub(210, 210, 210);
-        /* disegna KxK quads */
+        // disegna KxK quads
         glBegin(GL_QUADS);
         glNormal3f(0, 1, 0);
         for (int x = 0; x < K; x++)
@@ -368,7 +291,7 @@ void drawStrada() {
                 float x1 = -S + 2 * (x + 1) * S / K;
                 float z0 = -S + 2 * (z + 0) * S / K;
                 float z1 = -S + 2 * (z + 1) * S / K;
-                /* disegno solo i quadrati relativi alla strada */
+                // disegno solo i quadrati relativi alla strada
                 if ((x0 <= FINE_STRADA) && (x0 >= -FINE_STRADA) && ((z0 < -240) || (z0 > -238))) {
                     glTexCoord2f(0.0, 0.0);
                     glVertex3d(x0, H, z0);
@@ -387,7 +310,7 @@ void drawStrada() {
 }
 
 
-/* disegno l'asfalto in prossimità dell'arrivo con una scacchiera texture */
+// disegno l'asfalto in prossimità dell'arrivo con una scacchiera texture
 void drawArrivoTexture() {
     const float S = SIZE_FLOOR;
     const float H = 0;
@@ -408,8 +331,7 @@ void drawArrivoTexture() {
             float x1 = -S + 2 * (x + 1) * S / K;
             float z0 = -S + 2 * (z + 0) * S / K;
             float z1 = -S + 2 * (z + 1) * S / K;
-            //printf("%f x0, %f x1, %f z0, %f z1\n", x0, x1, z0, x1);
-            /* sono in prossimità di fine pista texturo con la bandiera a scacchi */
+            // sono in prossimità di fine pista texturo con la bandiera a scacchi
             if ((x0 <= FINE_STRADA) && (x0 >= -FINE_STRADA) && (z0 >= -240) && (z0 <= -238)) {
                 glTexCoord2f(0.0, 0.0);
                 glVertex3d(x0, H, z0);
@@ -422,7 +344,6 @@ void drawArrivoTexture() {
             }
         }
     glEnd();
-
     glDisable(GL_TEXTURE_2D);
     return;
 }
@@ -439,9 +360,6 @@ void drawFuoriStrada() {
         glDisable(GL_TEXTURE_GEN_S);
         glDisable(GL_TEXTURE_GEN_T);
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
-
-        //glColor3ub(0, 179, 60);
         glBegin(GL_QUADS);
         glNormal3f(0, 1, 0);
         for (int x = 0; x < K; x++)
@@ -469,19 +387,11 @@ void drawFuoriStrada() {
 
 // setto la posizione della camera
 double *setCameraPreSky() {
-
-
     double px = vespa.px;
     double py = vespa.py;
     double pz = vespa.pz;
-    // double vel = -vespa.vel * 2;
-    // cerr << "\npx: " << px << "- py: " << py << " - pz: "<< pz;
     double angle = vespa.facing;
-
-    //double velNor = vel / (0.6);
     float camH = 0.7;
-
-    // printf("%c \n", vespa.isRotating);
     glTranslatef(0, camH, -eyeDist);
     glRotatef(viewBeta, 1, 0, 0);
     glRotatef(-angle, 0, 1, 0);
@@ -498,7 +408,6 @@ double *setCameraPreSky() {
         glRotatef(viewAlpha, 0, 1, 0);
     } else {
         glRotatef(viewAlpha, 0, 1, 0);
-        //printf("%f px, %f py, %f pz\n",px,py,pz);
     }
 
     //ripristino telecamera standard
@@ -508,11 +417,6 @@ double *setCameraPreSky() {
         eyeDist = 5;
     }
 
-    //fai solo la ruotazine
-    /*glTranslatef(0, 1, -1.5 - vel);
-    glRotatef(20, 1, 0, 0);
-    glRotatef(angle, 0, 1, 0);*/
-
     static double p[3];
     p[0] = px;
     p[1] = py;
@@ -520,10 +424,29 @@ double *setCameraPreSky() {
     return p;
 }
 
+// setto camera iniziale
 void setCameraPostSky(double px, double py, double pz) {
     glTranslatef(-px, -py - 1.5, -pz);
+
+    //TODO vedere se mettere le altre camere (con rotazione da vedere)
+    /* switch (cameraType) {
+         case CAMERA_MOUSE:
+             glTranslatef(-px, -py - 1.5, -pz);
+             break;
+         case CAMERA_BACK_CAR:
+             glTranslatef(-px, -py - 1.5, -pz - 3);
+             break;
+         case CAMERA_PILOT:
+             glTranslatef(-px, -py , -pz+3);
+             break;
+         case CAMERA_TOP_CAR:
+             glTranslatef(-px+30, -py , -pz);
+             break;
+     }*/
+
 }
 
+// simulo una tempesta di sabbia
 void tempestaSabbia() {
     GLfloat fogColor[4] = {0.6, 0.6, 0.4, 1.0};
     glFogi(GL_FOG_MODE, GL_LINEAR);
@@ -533,6 +456,7 @@ void tempestaSabbia() {
     glClearColor(0.5, 0.5, 0.5, 1.0);
 }
 
+/* //TODO vedere se eliminare, penso di si
 // setto la posizione della camera
 void setCamera() {
 
@@ -598,36 +522,13 @@ void setCamera() {
             glTranslatef(0, 0, -eyeDist);
             glRotatef(viewBeta, 1, 0, 0);
             glRotatef(viewAlpha, 0, 1, 0);
-/*
-printf("%f %f %f\n",viewAlpha,viewBeta,eyeDist);
-                ex=eyeDist*cos(viewAlpha)*sin(viewBeta);
-                ey=eyeDist*sin(viewAlpha)*sin(viewBeta);
-                ez=eyeDist*cos(viewBeta);
-                cx = px - camd*sinf;
-                cy = py + camh;
-                cz = pz - camd*cosf;
-                gluLookAt(ex,ey,ez,cx,cy,cz,0.0,1.0,0.0);
-*/
+
             break;
     }
-}
-
-void drawCircle(float r, float x, float y) {
-    float i = 0.0f;
-
-    glBegin(GL_TRIANGLE_FAN);
-
-    glVertex2f(x, y); // Center
-    for (i = 0.0f; i <= 360; i++)
-        glVertex2f(r * cos(M_PI * i / 180.0) + x, r * sin(M_PI * i / 180.0) + y);
-
-    glEnd();
-}
+}*/
 
 // disegno la bandiera a scacchi nel radar
 void drawFinishFlagRadar() {
-
-
     float color = 0;
     for (int x = 25; x <= 225; x += 5) {
         glColor3f(color, color, color);
@@ -642,50 +543,14 @@ void drawFinishFlagRadar() {
         else
             color = 0;
     }
-
-    /* color = 1;
-     for(int x=120; x<=138; x+=5) {
-         glColor3f(color, color, color);
-         glBegin(GL_POLYGON);
-         glVertex2d(x,SIZE_FLOOR - 5 +5);
-         glVertex2d(x, SIZE_FLOOR - 0+5) ;
-         glVertex2d(x-5, SIZE_FLOOR - 0+5 );
-         glVertex2d(x-5, SIZE_FLOOR - 5 +5);
-         glEnd();
-         if(color == 0)
-             color = 1;
-         else
-             color = 0;
-     }*/
-
-
 }
 
-/* disegno il Radar in alto a SX */
+// disegno il Radar in basso a sx
 void drawRadar() {
     int x0 = 0, x1 = SIZE_FLOOR;
     int y0 = 0, y1 = SIZE_FLOOR + 20;
     glPushMatrix();
 
-    /*for (unsigned i = 0; i < targets.size(); ++i)
-    {
-        //Indicatore Target
-        glBegin(GL_QUADS);
-        if (targets[i].joined)
-            glColor3f(0.0, 1.0, 0);
-        else
-            glColor3f(1.0, 0.0, 0);
-        int xT = targets[i].px + x1;
-        // int zT = targets[i].pz + 500;
-        // int xT = -300 + 500 ;
-        int zT = abs((int)targets[i].pz) - abs((int)x.pz);
-        float xTM = xT / 2; //SPAZIO MAPPA per target
-        glVertex2f(xTM - 4, zT - 4 + 50);
-        glVertex2f(xTM + 4, zT - 4 + 50);
-        glVertex2f(xTM + 4, zT + 4 + 50);
-        glVertex2f(xTM - 4, zT + 4 + 50);
-        glEnd();
-    }*/
     //Indicatore Vespa
     glColor3f(1.0, 0, 0);
     glBegin(GL_TRIANGLES);
@@ -694,8 +559,6 @@ void drawRadar() {
     int posizioneFuoriStrada = (18 * vespa.px) + x1;
     if (vespa.px < 4.5 + FINE_STRADA && vespa.px > -2 - FINE_STRADA) {
         xVespa = (18 * vespa.px) + x1 - 20;
-        //printf("%d\n", posizioneFuoriStrada);
-
     } else {
         xVespa = (posizioneFuoriStrada - x1) + x1;
         if (xVespa > SIZE_FLOOR / 2) {
@@ -705,14 +568,11 @@ void drawRadar() {
         }
     }
     int zVespa = -vespa.pz + y1;
-    //drawCircle(3,xVespa,zVespa);
     float xM = xVespa / 2; //SPAZIO MAPPA
     float zM = zVespa / 2;
     glVertex2f(xM - 6, zM);
     glVertex2f(xM + 6, zM);
     glVertex2f(xM, zM + 10);
-    // glRotatef(-vespa.sterzo / 2, 1, 1, 1);
-
     glEnd();
 
     drawFinishFlagRadar();
@@ -724,7 +584,6 @@ void drawRadar() {
     glVertex2d(SIZE_FLOOR / 2 + FINE_STRADA + 90, y0);
     glVertex2d(SIZE_FLOOR / 2 + FINE_STRADA + 90, y1);
     glVertex2d(SIZE_FLOOR / 2 - FINE_STRADA - 97, y1);
-    //glEnd();
     glRotatef(90, 1, 0, 0);
     glColor3f(1, 1, 1); //reset color
 
@@ -738,13 +597,11 @@ void drawRadar() {
     glEnd();
     glRotatef(90, 1, 0, 0);
     glColor3f(1, 1, 1); //reset color
-
-
     glPopMatrix();
 }
 
+//funzione che disegna le rocce
 void drawRocce() {
-
     int counter = 0;
     Mesh rocciaTemp;
     for (int i = 0; i < 440; i += 23) {
@@ -777,11 +634,7 @@ void drawRocce() {
         rocciaTemp = drawRoccia();
         rocce[counter++] = rocciaTemp;
         glPopMatrix();
-
-        // printf("%f\n", rocce[20].Center().X());
     }
-
-    //TODO vedere se va mantenuto
     for (int i = 20; i < 440; i += 11) {
         glPushMatrix();
         glTranslatef(-1, 0, ZROCCIA - i);
@@ -791,7 +644,7 @@ void drawRocce() {
 
 }
 
-// render 2d text on the screen
+// render testo 2d
 void RenderText(std::string message, SDL_Color color, int x, int y, TTF_Font *font) {
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
@@ -835,17 +688,15 @@ void RenderText(std::string message, SDL_Color color, int x, int y, TTF_Font *fo
     glDisable(GL_BLEND);
     glDisable(GL_TEXTURE_2D);
     glEnable(GL_DEPTH_TEST);
-
     glMatrixMode(GL_MODELVIEW);
     glPopMatrix();
     glMatrixMode(GL_PROJECTION);
     glPopMatrix();
-
     glDeleteTextures(1, &texture);
     SDL_FreeSurface(sFont);
 }
 
-
+// render della schermata iniziale
 void renderingPreGame(SDL_Window *win) {
 
     int w = scrW, h = scrH;
@@ -859,7 +710,6 @@ void renderingPreGame(SDL_Window *win) {
     glLoadIdentity();
 
     RenderText("\"Vespa on the Road! - Time attack edition\"", colorBlack, w * 1 / 20 + 10, h - 70, font);
-
     string regole[7] = {
             "OBIETTIVO DEL GIOCO",
             "Il gioco consiste nel raggiungere il traguardo alla fine della strada nel minor tempo possibile.",
@@ -873,20 +723,15 @@ void renderingPreGame(SDL_Window *win) {
 
     for (int i = 0; i < 7; i++) {
         if (i == 0) {
-
             RenderText(regole[i], colorBlack, w * 1 / 3, h - paddingTop + 20, font20);
         } else {
             RenderText(regole[i], colorBlack, w * 1 / 30, h - paddingTop, font17);
-
         }
-
         paddingTop += 25;
     }
-
     paddingTop += 30;
 
     RenderText("Buon divertimento e batti il record!", colorBlack, w * 1 / 4, h - paddingTop, font20);
-
     //testo sui comandi del gioco
     string instr[10] = {
             "COMANDI DI GIOCO",
@@ -903,20 +748,15 @@ void renderingPreGame(SDL_Window *win) {
     for (int i = 0; i < 10; i++) {
         if (i == 0) {
             RenderText(instr[i], colorBlack, w * 1 / 30, h - paddingTop + 20, font20);
-
         } else {
             RenderText(instr[i], colorBlack, w * 1 / 30, h - paddingTop, font17);
-
         }
 
         paddingTop += 25;
     }
-
     paddingTop += 40;
 
-
     RenderText("Premere un tasto qualsiasi per iniziare a giocare!", colorBlack, w * 1 / 8, h - paddingTop, font20);
-
     glFinish();
     vespa.controller.startTimeCounting(); //il cronometro inizia dopo la chiusura della schermata iniziale
 
@@ -924,7 +764,7 @@ void renderingPreGame(SDL_Window *win) {
 }
 
 
-//workaround per tostring (non funzionava altrimenti
+//workaround per tostring (non funzionava altrimenti)
 template<typename T>
 std::string to_string(T value) {
     //create an output string stream
@@ -937,18 +777,18 @@ std::string to_string(T value) {
     return os.str();
 }
 
-
+// funzione che permette di leggere il record da file
 double getRecordDaFile() {
     std::ifstream ifile("record.txt", std::ios::in);
     std::vector<double> records;
 
-    //check to see that the file was opened correctly:
+
     if (!ifile.is_open()) {
-        std::cerr << "There was a problem opening the input file!\n";
-        exit(1);//exit or do additional error checking
+        std::cerr << "Errore nell'apertura del file dei record!\n";
+        exit(1);
     }
     double num = 0.0;
-    //keep storing values from the text file so long as data exists:
+
     while (ifile >> num) {
         records.push_back(num);
     }
@@ -956,9 +796,9 @@ double getRecordDaFile() {
     return records[0];
 }
 
+// funzione che salva il record, se cambiato, su file
 void salvaRecordSuFile(double record) {
     ofstream myfile("record.txt");
-
     if (myfile.is_open()) {
         myfile << record;
         myfile.close();
@@ -981,8 +821,6 @@ void displayTime() {
 
 //funzione che mostra in basso l'esito dell'impatto con il punto interrogativo
 void displayEsitoPuntoInterrogativo() {
-    // int h = 40;
-    //  int w = 180;
     if (vespa.comandiInvertiti) {
         RenderText("Sterzo invertito!", colorRed, scrW / 4, scrH / 20, font);
     } else if (vespa.aumentaAcc) {
@@ -994,19 +832,19 @@ void displayEsitoPuntoInterrogativo() {
     }
 }
 
+
 void rendering(SDL_Window *win) {
 
     fpsNow++;
-
     glLineWidth(3); // linee larghe
 
-// settiamo il viewport
+    // settiamo il viewport
     glViewport(0, 0, scrW, scrH);
 
-// colore sfondo = bianco
+    // colore sfondo = bianco
     glClearColor(1, 1, 1, 1);
 
-// settiamo la matrice di proiezione
+    // settiamo la matrice di proiezione
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(70,                   //fovy,
@@ -1018,47 +856,31 @@ void rendering(SDL_Window *win) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-// riempe tutto lo screen buffer di pixel color sfondo
+    // riempe tutto lo screen buffer di pixel color sfondo
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-//drawAxis(); // disegna assi frame VISTA
-
-
-//di regola prima trasla e poi ruota la camera
-
     glLoadIdentity();
-
     double *p;
     p = setCameraPreSky();
     drawSkybox(20);
     static float tmpcol[4] = {1, 1, 1, 1};
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, tmpcol);
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 127);
-
     glEnable(GL_LIGHTING);
-
     setCameraPostSky(p[0], p[1], p[2]);
 
-    // setto la posizione luce
+    // setto la posizione luce in alto (mezzogiorno)
     float tmpv[4] = {0, 10, 0, 0}; // ultima comp=0 => luce direzionale
     glLightfv(GL_LIGHT0, GL_POSITION, tmpv);
 
     drawBillboardPoster();
-
-
-    drawStrada(); // disegna il suolo
+    drawStrada();
     drawFuoriStrada();
-
     drawLineaStradale();
     drawArrivoTexture();
     drawPalloncini();
     drawRocce();
-
     drawQuestionMarks();
-
     drawBillboard();
-
-    //drawCube(useShadow,useWireframe);
 
     //tempesta di sabbia, effetto carino
     if (useSabbiaTempesta) {
@@ -1070,13 +892,11 @@ void rendering(SDL_Window *win) {
 
     }
     vespa.Render();
-
     if (useRadar) {
         SetCoordToPixel();
         drawRadar();
 
     }
-
     //mostra tempo attuale e record
     displayTime();
 
@@ -1088,7 +908,6 @@ void rendering(SDL_Window *win) {
 
 //TODO
 void renderingGameOver(SDL_Window *win) {
-
     int w = scrW, h = scrH;
     fpsNow++;
     glMatrixMode(GL_PROJECTION);
@@ -1153,11 +972,8 @@ void renderingFineStrada(SDL_Window *win) {
         0.0) { //controllo per avvalorare la variabile solo 1 volta, ovvero appena la vespa taglia il traguardo
         tempoPercorso = vespa.controller.getSeconds();
     }
-    //printf("%d fps -- %f\n", fpsNow, vespa.controller.getSeconds());
     instr[0].append(to_string(tempoPercorso));
     instr[0].append(" secondi");
-
-
 
     //se vero hai stabilito un nuovo record
     if (tempoPercorso <= record) {
@@ -1173,7 +989,6 @@ void renderingFineStrada(SDL_Window *win) {
         instr[2].append("Gioca nuovamente per cercare di battere il record!");
     }
 
-
     int paddingTop = 300;
     for (int i = 0; i < 5; i++) {
 
@@ -1182,12 +997,11 @@ void renderingFineStrada(SDL_Window *win) {
     }
 
     SDL_GL_SwapWindow(win);
-
 }
 
-//per ora return 1 orna il quit del gioco
+// funzione che gestisce le dinamiche di gioco
 int gameplay() {
-    srand(time(NULL));
+    srand(time(NULL)); //seme che cambia per il random fatto bene
 
     float limiteRocciaSx = -1.2; //estremo sx di una roccia qualsiasi
     float limiteRocciaDx = 1.2; //estremo dx di una roccia qualsiasi
@@ -1195,7 +1009,7 @@ int gameplay() {
                             11}; //array contenente il centro di ognuna delle 5 rocce che si trovano sulla stessa linea
 
     if ((-vespa.pz >= SIZE_FLOOR - 10) && (abs(vespa.px) < FINE_STRADA + 1)) {
-        //TODO fare qualcosa per arrivo traguardo
+        //arrivo al traguardo
         return 1;
     } else {
         for (int i = 0; i < 440; i += 23) {
@@ -1238,42 +1052,22 @@ int gameplay() {
         //controllo punto interrogativo 1
         if ((vespa.px >= 2.6 && vespa.px <= 5) && (vespa.pz <= 147.2 && vespa.pz >= 146.5)) {
             glEnable(GL_LIGHTING);
-            // initialize random seed:
             random = rand() % 3; //numero da 0 a 2
             switch (random) {
 
                 case 0:
                     vespa.invertiComandi(); //inverte sterzo
                     RenderText(esitoPuntoInterrogativo[random], colorRed, 50, scrH - 160, font);
-
-                    /*for(int j=vespa.controller.getSeconds(); j < vespa.controller.getSeconds()*30; j++){
-                        printf("prova %d\n",random);
-                        RenderText(esitoPuntoInterrogativo[random], colorRed, 50, scrH-160, font);
-                    }*/
-
                     break;
                 case 1:
                     vespa.diminuisciAccelerazione(); //diminuisce velocità
                     RenderText(esitoPuntoInterrogativo[random], colorRed, 50, scrH - 160, font);
-
-                    /*for(int j=vespa.controller.getSeconds(); j < vespa.controller.getSeconds()*30; j++){
-                        printf("prova %d\n",random);
-                        RenderText(esitoPuntoInterrogativo[random], colorRed, 50, scrH-160, font);
-                    }*/
                     break;
                 case 2:
                     vespa.aumentaAccelerazione(); //raddoppia velocità
                     RenderText(esitoPuntoInterrogativo[random], colorRed, 50, scrH - 160, font);
-
-                    /*for(int j=vespa.controller.getSeconds(); j < vespa.controller.getSeconds()*30; j++){
-                        printf("prova %d\n",random);
-                        RenderText(esitoPuntoInterrogativo[random], colorRed, 50, scrH-160, font);
-                    }*/
                     break;
             }
-
-
-            // printf("ciao1 + %d\n", random);
         }
         //controllo punto interrogativo 2
         if (((vespa.px >= 2.6 && vespa.px <= 5) &&
@@ -1289,7 +1083,6 @@ int gameplay() {
                 case 2:
                     vespa.aumentaAccelerazione(); //raddoppia velocità
             }
-            // printf("ciao2 + %d\n", random);
         }
         //controllo punto interrogativo 3
         if (((vespa.px <= -2.6 && vespa.px >= -5) && (vespa.pz >= -23.4 && vespa.pz <= -22.5))) {
@@ -1304,26 +1097,10 @@ int gameplay() {
                 case 2:
                     vespa.aumentaAccelerazione(); //raddoppia velocità
             }
-            //printf("ciao3 + %d\n", random);
         }
 
         return -1;
     }
-/*
-    printf("ciao\n");
-
-    for (int i = 0; i < sizeof(rocce); i++) {
-        printf("%f pz vespa\n",vespa.pz);
-        printf("%f pz roccia %d\n",rocce[i].Center().Z(),i);
-
-        if (abs(vespa.pz - 3) == rocce[i].Center().Z() + 2) {
-            printf("ciao\n");
-        } else {
-            done = 0;
-        }
-    }*/
-
-
 }
 
 int main(int argc, char *argv[]) {
@@ -1332,14 +1109,10 @@ int main(int argc, char *argv[]) {
     SDL_Window *win;
     SDL_GLContext mainContext;
     Uint32 windowID;
-    SDL_Joystick *joystick;
     static int keymap[Controller::NKEYS] = {SDLK_a, SDLK_d, SDLK_w, SDLK_s, SDLK_RIGHT, SDLK_LEFT, SDLK_t};
 
     // inizializzazione di SDL
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK);
-
-    SDL_JoystickEventState(SDL_ENABLE);
-    joystick = SDL_JoystickOpen(0);
 
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -1353,17 +1126,12 @@ int main(int argc, char *argv[]) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    glEnable(GL_NORMALIZE); // opengl, per favore, rinormalizza le normali
-    // prima di usarle
-    //glEnable(GL_CULL_FACE);
+    glEnable(GL_NORMALIZE); // rinormalizza le normali (non viene fatto in automatico da opengl)
     glFrontFace(GL_CW); // consideriamo Front Facing le facce ClockWise
     glEnable(GL_COLOR_MATERIAL);
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-    glEnable(GL_POLYGON_OFFSET_FILL); // caro openGL sposta i
-    // frammenti generati dalla
-    // rasterizzazione poligoni
-    glPolygonOffset(1, 1);             // indietro di 1
-
+    glEnable(GL_POLYGON_OFFSET_FILL);
+    glPolygonOffset(1, 1); // indietro di 1
 
     //caricamento font
     font = TTF_OpenFont("FreeSans.ttf", 35);
@@ -1410,7 +1178,7 @@ int main(int argc, char *argv[]) {
             switch (e.type) {
                 case SDL_KEYDOWN:
                     vespa.controller.EatKey(e.key.keysym.sym, keymap, true);
-                    if (e.key.keysym.sym == SDLK_F1) cameraType = (cameraType + 1) % CAMERA_TYPE_MAX;
+                    if (e.key.keysym.sym == SDLK_F1) cameraType = (cameraType + 1) % CAMERA_TYPE_MAX; //TODO vedere se mantenere le camere
                     if (e.key.keysym.sym == SDLK_F2) useWireframe = !useWireframe;
                     if (e.key.keysym.sym == SDLK_F3) useRadar = !useRadar;
                     if (e.key.keysym.sym == SDLK_F4) useHeadlight = !useHeadlight;
@@ -1456,7 +1224,6 @@ int main(int argc, char *argv[]) {
                                     scrH = e.window.data2;
                                     glViewport(0, 0, scrW, scrH);
                                     rendering(win);
-                                    //redraw(); // richiedi ridisegno
                                     break;
                                 }
                             }
@@ -1469,82 +1236,35 @@ int main(int argc, char *argv[]) {
                         if (e.motion.state & SDL_BUTTON(1) /*& cameraType == CAMERA_MOUSE*/) {
                             viewAlpha += e.motion.xrel;
                             viewBeta += e.motion.yrel;
-//          if (viewBeta<-90) viewBeta=-90;
-                            if (viewBeta < +5) viewBeta = +5; //per non andare sotto la macchina
+                            if (viewBeta < +5) viewBeta = +5; //per non andare sotto la vespa
                             if (viewBeta > +90) viewBeta = +90;
-                            // redraw(); // richiedi un ridisegno (non c'e' bisongo: si ridisegna gia'
-                            // al ritmo delle computazioni fisiche)
                         }
                     }
                     break;
 
                     //TODO ELIMINARE
-                     case SDL_MOUSEWHEEL:
-                         if (!preGame) {
-                             if (e.wheel.y > 0) {
-                                 // avvicino il punto di vista (zoom in)
-                                 eyeDist = eyeDist * 0.9;
-                                 if (eyeDist < 1) eyeDist = 1;
-                             };
-                             if (e.wheel.y < 0) {
-                                 // allontano il punto di vista (zoom out)
-                                 eyeDist = eyeDist / 0.9;
-                             };
-                         }
-                         break;
-
-                    /*case SDL_JOYAXISMOTION: // Handle Joystick Motion
-                        if (e.jaxis.axis == 0) {
-                            if (e.jaxis.value < -3200) {
-                                vespa.controller.Joy(0, true);
-                                vespa.controller.Joy(1, false);
-    //	      printf("%d <-3200 \n",e.jaxis.value);
-                            }
-                            if (e.jaxis.value > 3200) {
-                                vespa.controller.Joy(0, false);
-                                vespa.controller.Joy(1, true);
-    //	      printf("%d >3200 \n",e.jaxis.value);
-                            }
-                            if (e.jaxis.value >= -3200 && e.jaxis.value <= 3200) {
-                                vespa.controller.Joy(0, false);
-                                vespa.controller.Joy(1, false);
-    //	      printf("%d in [-3200,3200] \n",e.jaxis.value);
-                            }
-                            rendering(win);
-                            //redraw();
-                        }
-                        break;
-                    case SDL_JOYBUTTONDOWN: // Handle Joystick Button Presses
-                        if (e.jbutton.button == 0) {
-                            vespa.controller.Joy(2, true);
-    //	   printf("jbutton 0\n");
-                        }
-                        if (e.jbutton.button == 2) {
-                            vespa.controller.Joy(3, true);
-    //	   printf("jbutton 2\n");
-                        }
-                        break;
-                    case SDL_JOYBUTTONUP: // Handle Joystick Button Presses
-                        vespa.controller.Joy(2, false);
-                        vespa.controller.Joy(3, false);
-                        break;*/
+                case SDL_MOUSEWHEEL:
+                    if (!preGame) {
+                        if (e.wheel.y > 0) {
+                            // avvicino il punto di vista (zoom in)
+                            eyeDist = eyeDist * 0.9;
+                            if (eyeDist < 1) eyeDist = 1;
+                        };
+                        if (e.wheel.y < 0) {
+                            // allontano il punto di vista (zoom out)
+                            eyeDist = eyeDist / 0.9;
+                        };
+                    }
+                    break;
             }
         } else {
             // nessun evento: siamo IDLE
-
             Uint32 timeNow = SDL_GetTicks(); // che ore sono?
-
-            if (timeLastInterval + fpsSampling < timeNow) {
-                fps = 1000.0 * ((float) fpsNow) / (timeNow - timeLastInterval);
-                fpsNow = 0;
-                timeLastInterval = timeNow;
-            }
 
             bool doneSomething = false;
             int guardia = 0; // sicurezza da loop infinito
 
-            // finche' il tempo simulato e' rimasto indietro rispetto
-            // al tempo reale...
+            // finche' il tempo simulato e' rimasto indietro rispetto al tempo reale...
             while (nstep * PHYS_SAMPLING_STEP < timeNow) {
                 vespa.DoStep();
                 nstep++;
@@ -1566,24 +1286,20 @@ int main(int argc, char *argv[]) {
                         schermata = gameplay();
                     }
                     switch (schermata) {
-                        case 1:
+                        case 1: // traguardo
                             renderingFineStrada(win);
                             break;
-                        case 2:
+                        case 2: // roccia colpita -> gameover
                             renderingGameOver(win);
                             break;
-                        default:
+                        default: // gioco in corso
                             rendering(win);
                             break;
 
                     }
-
                 }
-
-
             } else {
                 // tempo libero!!!
-
             }
         }
     }

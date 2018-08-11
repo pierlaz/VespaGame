@@ -18,12 +18,10 @@
 #include <vector> // la classe vector di STL 
 
 #include "vespa.h"
-//#include "../mesh/point3.h"
 #include "../mesh/mesh.h"
 
 #define FLOOR_LIMIT 249.3 //limite del floor del main (decimale usato per non far sporgere nulla della moto)
 #define FINE_STRADA 10
-
 
 
 clock_t startTime;
@@ -68,9 +66,8 @@ double Controller::getSeconds() {
 }
 
 void Vespa::Init() {
-    // inizializzo lo stato della macchina
-    px = facing = 0; // posizione e orientamento
-    py = 0;
+    // inizializzo lo stato della vespa
+    px = py = facing = 0; // posizione e orientamento
 
     pz = FLOOR_LIMIT - 20;
     mozzoA = mozzoP = sterzo = 0;   // stato
@@ -78,7 +75,6 @@ void Vespa::Init() {
     // inizializzo la struttura di controllo
     controller.Init();
 
-    //velSterzo=3.4;         // A
     velSterzo = 2.0;         // A
     velRitornoSterzo = 0.93; // B, sterzo massimo = A*B / (1-B)
 
@@ -88,7 +84,7 @@ void Vespa::Init() {
     // 1 = no attrito
     // <<1 = attrito grande
     attritoZ = 0.991;  // piccolo attrito sulla Z (nel senso di rotolamento delle ruote)
-    attritoX = 0.8;  // grande attrito sulla X (per non fare slittare la macchina)
+    attritoX = 0.8;  // grande attrito sulla X (per non fare slittare la vespa)
     attritoY = 1.0;  // attrito sulla y nullo
 
     // Nota: vel max = accMax*attritoZ / (1-attritoZ)
@@ -96,9 +92,9 @@ void Vespa::Init() {
     raggioRuotaA = 0.35;
     raggioRuotaP = 0.35;
 
-    grip = 0.35; // quanto il facing macchina si adegua velocemente allo sterzo
+    grip = 0.35; // quanto il facing vespa si adegua velocemente allo sterzo
 
-
+    //Variabili utili per gli esiti di quando viene colpito il punto interrogativo in-game
     comandiInvertiti = false;
     aumentaAcc = false;
     diminuisciAcc = false;
@@ -116,7 +112,7 @@ void Controller::Joy(int keymap, bool pressed_or_released) {
     key[keymap] = pressed_or_released;
 }
 
-// disegno la linea stradale continua sui lati */
+// disegno la linea stradale continua sui lati
 void drawLineaStradale() {
     glPushMatrix();
     glDisable(GL_LIGHTING);
@@ -160,7 +156,7 @@ void setupPartTexture(Point3 min, Point3 max, int texture) {
 }
 
 
-// disegno la linea stradale continua sui lati */
+// disegno i palloncini oltre il traguardo (utili per far vedere dove si trova la fine del percoso)
 void drawPalloncini() {
     glPushMatrix();
     glDisable(GL_LIGHTING);
@@ -186,90 +182,66 @@ void drawPalloncini() {
     glEnable(GL_LIGHTING);
 }
 
+// disegno una roccia
 Mesh drawRoccia() {
     glPushMatrix();
     glDisable(GL_LIGHTING);
     glColor3f(1, 1, 1);
-    //glScalef(0.1, 1, FLOOR_LIMIT + 0.03);
     glPushMatrix();
-    //glTranslatef(-100, 0.001, 0);
     setupPartTexture(roccia.bbmin, roccia.bbmax, 10);
     roccia.RenderNxV();
     glPopMatrix();
-    /* glPushMatrix();
-     glTranslatef(125, 0.001, 0);
-     striscia.RenderNxV();
-     glPopMatrix();*/
     glPopMatrix();
     glEnable(GL_LIGHTING);
     return roccia;
 }
 
-void drawBillboardPoster()
-{
-
-
-//   float billboardPoster[4][3] =
-//            {
-//                    {270.5, 28.2, 147.8}, // lower sx vertex
-//                    {230, 28.2, 147.8},   // lower dx vertex
-//                    {270.5, 45.7, 147.8}, // higher sx vertex
-//                    {230, 45.7, 147.8},   // higher dx vertex
-//            };
-
-    float billboardPoster[4][3] =
-            {
-                    {27.7, 1.2, 0.9}, // lower sx vertex
-                    {20.4, 1.2, 0.9},   // lower dx vertex
-                    {27.7, 14, 0.9}, // higher sx vertex
-                    {20.4, 14, 0.9},   // higher dx vertex
-            };
+// applico la mia immagine al billboard a bordo strada
+void drawBillboardPoster() {
+    float billboardPoster[4][3] = {
+            {27.7, 1.2, 0.9}, // lower sx vertex
+            {20.4, 1.2, 0.9}, // lower dx vertex
+            {27.7, 14,  0.9}, // higher sx vertex
+            {20.4, 14,  0.9}, // higher dx vertex
+    };
 
     glPushMatrix();
-  //  glDisable(GL_COLOR_MATERIAL);
     glEnable(GL_TEXTURE_2D);
-    glColor4f(1,1,1,1);
+    glColor4f(1, 1, 1, 1);
     glBindTexture(GL_TEXTURE_2D, 13);
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); // render original colors of the texture
     glBegin(GL_QUADS);
+
     glTexCoord2f(1.0, 0.0);
     glVertex3fv(billboardPoster[2]);
-
     glTexCoord2f(0.0, 0.0);
     glVertex3fv(billboardPoster[3]);
-
     glTexCoord2f(0.0, 1.0);
     glVertex3fv(billboardPoster[1]);
-
     glTexCoord2f(1.0, 1.0);
     glVertex3fv(billboardPoster[0]);
 
     glEnd();
-
-
     glPopMatrix();
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); // back to the default value of GL_TEXTURE_ENV_MODE
 }
 
-
-void drawBillboard(){
+// disegno il billboard a bordo strada
+void drawBillboard() {
     glPushMatrix();
     glDisable(GL_LIGHTING);
     glColor3f(0.5, 0.5, 0.5);
-    glScalef(3,3,3);
-   // glRotatef(-20,0,1,0);
-   setupPartTexture(billboard.bbmin, billboard.bbmax, 12);
-    glTranslatef(8,0,0);
+    glScalef(3, 3, 3);
+    setupPartTexture(billboard.bbmin, billboard.bbmax, 12);
+    glTranslatef(8, 0, 0);
     billboard.RenderNxV();
     glPopMatrix();
     glEnable(GL_LIGHTING);
-
-    //glPushMatrix();
-
-   // glPopMatrix();
 }
 
+// disegno i 3 punti interrogativi in posizioni pre-fissate del percorso
 void drawQuestionMarks() {
+    //punto interrogativo 1
     glPushMatrix();
     glEnable(GL_LIGHTING);
     glColor3f(1, 1, 1);
@@ -280,15 +252,12 @@ void drawQuestionMarks() {
     setupPartTexture(questionMark.bbmin, questionMark.bbmax, 11);
     questionMark.RenderNxF();
     glPopMatrix();
-
-
     if (useShadow) {
         glPushMatrix();
         glDisable(GL_LIGHTING); // niente lighing per l'ombra
         glScalef(0.7, 0.7, 0.7);
         glRotatef(90, 0, 1, 0);
         glTranslatef(-210, 0, 6);
-
         glColor3f(0.1, 0.1, 0.1); // colore fisso
         glTranslatef(0, 0.01, 0); // alzo l'ombra di un epsilon per evitare z-fighting con il pavimento
         glScalef(1.01, 0, 1.01);  // appiattisco sulla Y, ingrandisco dell'1% sulla Z e sulla X
@@ -296,10 +265,9 @@ void drawQuestionMarks() {
         questionMark.RenderNxF();
         glColor3f(1, 1, 1);
         glPopMatrix();
-
-
     }
 
+    //punto interrogativo 2
     glPushMatrix();
     glEnable(GL_LIGHTING);
     glScalef(0.7, 0.7, 0.7);
@@ -308,16 +276,12 @@ void drawQuestionMarks() {
     setupPartTexture(questionMark.bbmin, questionMark.bbmax, 11);
     questionMark.RenderNxF();
     glPopMatrix();
-
-    // glEnable(GL_LIGHTING);
-
     if (useShadow) {
         glPushMatrix();
         glDisable(GL_LIGHTING); // niente lighing per l'ombra
         glScalef(0.7, 0.7, 0.7);
         glRotatef(90, 0, 1, 0);
         glTranslatef(-76, 0, 6);
-
         glColor3f(0.1, 0.1, 0.1); // colore fisso
         glTranslatef(0, 0.01, 0); // alzo l'ombra di un epsilon per evitare z-fighting con il pavimento
         glScalef(1.01, 0, 1.01);  // appiattisco sulla Y, ingrandisco dell'1% sulla Z e sulla X
@@ -325,10 +289,10 @@ void drawQuestionMarks() {
         questionMark.RenderNxF();
         glColor3f(1, 1, 1);
         glPopMatrix();
-
         glEnable(GL_LIGHTING);
     }
 
+    //punto interrogativo 3
     glPushMatrix();
     glEnable(GL_LIGHTING);
     glScalef(0.7, 0.7, 0.7);
@@ -338,15 +302,12 @@ void drawQuestionMarks() {
     questionMark.RenderNxF();
     glPopMatrix();
 
-    // glEnable(GL_LIGHTING);
-
     if (useShadow) {
         glPushMatrix();
         glDisable(GL_LIGHTING); // niente lighing per l'ombra
         glScalef(0.7, 0.7, 0.7);
         glRotatef(90, 0, 1, 0);
         glTranslatef(33, 0, -6);
-
         glColor3f(0.1, 0.1, 0.1); // colore fisso
         glTranslatef(0, 0.01, 0); // alzo l'ombra di un epsilon per evitare z-fighting con il pavimento
         glScalef(1.01, 0, 1.01);  // appiattisco sulla Y, ingrandisco dell'1% sulla Z e sulla X
@@ -354,28 +315,29 @@ void drawQuestionMarks() {
         questionMark.RenderNxF();
         glColor3f(1, 1, 1);
         glPopMatrix();
-
         glEnable(GL_LIGHTING);
     }
     glPopMatrix();
 }
 
+// funzione che viene inverte i comandi dello sterzo
 void Vespa::invertiComandi() {
-    if (controller.key[Controller::LEFT]) sterzo -= velSterzo; //inverto sterzo per penalità (in futuro quando colpisci scatola)
-    if (controller.key[Controller::RIGHT]) sterzo += velSterzo;
+    if (controller.key[Controller::LEFT]) sterzo -= velSterzo; //inverto sterzo post passaggio su punto interrogativo
+    if (controller.key[Controller::RIGHT]) sterzo += velSterzo; //inverto sterzo post passaggio su punto interrogativo
     sterzo *= velRitornoSterzo;
     comandiInvertiti = true;
     aumentaAcc = false;
     diminuisciAcc = false;
 }
 
+// funzione che setta i flag in base all'esito del passaggio sul punto interrogativo
 void Vespa::aumentaAccelerazione() {
-
     aumentaAcc = true;
     diminuisciAcc = false;
     comandiInvertiti = false;
 }
 
+// funzione che setta i flag in base all'esito del passaggio sul punto interrogativo
 void Vespa::diminuisciAccelerazione() {
 
     diminuisciAcc = true;
@@ -384,12 +346,7 @@ void Vespa::diminuisciAccelerazione() {
 
 }
 
-// DoStep: facciamo un passo di fisica (a delta_t costante)
-//
-// Indipendente dal rendering.
-//
-// ricordiamoci che possiamo LEGGERE ma mai SCRIVERE
-// la struttura controller da DoStep
+// funzione che fa un passo di fisica (a delta_t costante)
 void Vespa::DoStep() {
     // computiamo l'evolversi della macchina
 
@@ -402,9 +359,7 @@ void Vespa::DoStep() {
     vym = vy;
     vzm = +sinf * vx + cosf * vz;
 
-    // gestione dello sterzo
-
-
+    // gestione dello sterzo e delle accelerazioni (normale o cambiamenti dovuti ai punti interrogativi)
     if (px < 2.5 + FINE_STRADA && px > -FINE_STRADA && comandiInvertiti == false && aumentaAcc == false &&
         diminuisciAcc == false) {
         if (controller.key[Controller::ACC]) vzm -= accMax; // accelerazione in avanti
@@ -429,7 +384,6 @@ void Vespa::DoStep() {
         if (controller.key[Controller::LEFT]) sterzo += velSterzo;
         if (controller.key[Controller::RIGHT]) sterzo -= velSterzo;
         sterzo *= velRitornoSterzo; // ritorno a volante dritto
-
     } else if (diminuisciAcc == true) {
         if (px < 2.5 + FINE_STRADA && px > -FINE_STRADA) {
             if (controller.key[Controller::ACC]) vzm -= accMax / 2; // accelerazione in avanti
@@ -449,14 +403,12 @@ void Vespa::DoStep() {
     }
     if (controller.key[Controller::DEC]) vzm += accMax / 8; // accelerazione indietro (molto lenta nella vespa)
 
-
     // attirti (semplificando)
     vxm *= attritoX;
     vym *= attritoY;
     vzm *= attritoZ;
 
-    // l'orientamento della macchina segue quello dello sterzo
-    // (a seconda della velocita' sulla z)
+    // l'orientamento della vespa segue quello dello sterzo (a seconda della velocita' sulla z)
     facing = facing - (vzm * grip) * sterzo;
 
     // rotazione mozzo ruote (a seconda della velocita' sulla z)
@@ -476,7 +428,7 @@ void Vespa::DoStep() {
     py += vy;
     pz += vz;
 
-    // metto dei limiti di posizione alla vespa
+    // metto dei limiti di posizione alla vespa per non uscire dallo skybox
     if (pz > FLOOR_LIMIT)
         pz = FLOOR_LIMIT;
     if (pz < -FLOOR_LIMIT)
@@ -487,11 +439,8 @@ void Vespa::DoStep() {
         px = -FLOOR_LIMIT;
     }
 
-    // printf("%f px, %f pz\n", px, pz);
+    // printf("%f px, %f pz\n", px, pz); //debug
 }
-
-//void drawCube(); // questa e' definita altrove (quick hack)
-void drawAxis(); // anche questa
 
 // attiva una luce di openGL per simulare un faro della vespa
 void Vespa::DrawHeadlight(float x, float y, float z, int lightN, bool useHeadlight) const {
@@ -521,62 +470,57 @@ void Vespa::DrawHeadlight(float x, float y, float z, int lightN, bool useHeadlig
         glDisable(usedLight);
 }
 
+// funzione che disegna il manubrio della vespa
 void renderManubrio(bool usecolor, float sterzo) {
-
-    //gestione manubrio
     glPushMatrix();
     glRotatef(sterzo / 1.5, 0, 1, 0); //piega in curva
-    if (usecolor) glColor3f(1, 1, 1);     // colore rosso
+    if (usecolor) glColor3f(1, 1, 1);
     if (usecolor) setupPartTexture(manubrio.bbmin, manubrio.bbmax, 1);
-    //   glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE ); //risolve problema manubrio scuro
-    manubrio.RenderNxF();
-    /*glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE);
-    glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_MODULATE);
-    glTexEnvi(GL_TEXTURE_ENV, GL_RGB_SCALE_ARB, 2);
-     */
+    manubrio.RenderNxF(); // rendering della mesh usando normali per faccia
     glPopMatrix();
 }
 
+// funzione che disegna la maggior parte della vespa (senza le parti separate per fare le rotazioni/inclinazioni)
 void renderMostOfVespa(bool usecolor, float sterzo) {
-
-    //glPushMatrix();
-    if (usecolor) glColor3f(1, 1, 1);     // colore rosso
+    if (usecolor) glColor3f(1, 1, 1);
     if (usecolor) setupPartTexture(moto.bbmin, moto.bbmax, 1);
     if (!usecolor) {
         glRotatef(-sterzo / 2, 0, 0, 1);
     }
-    moto.RenderNxF(); // rendering delle mesh moto usando normali per vertice
-    //glPopMatrix();
+    moto.RenderNxV(); // rendering della mesh usando normali per vertice
 }
 
+// funzione che disegna la sella della vespa
 void renderSella(bool usecolor) {
     glPushMatrix();
-    if (usecolor) glColor3f(1, 1, 1);     // colore bianco
+    if (usecolor) glColor3f(1, 1, 1);
     if (usecolor) setupPartTexture(sella.bbmin, sella.bbmax, 4);
-    sella.RenderNxF();
+    sella.RenderNxF(); // rendering della mesh usando normali per faccia
     glPopMatrix();
 }
 
+// funzione che disegna il copriruota anteriore della vespa
 void renderCopriRuotaAnteriore(bool usecolor, float sterzo) {
     glPushMatrix();
     glTranslatef(-0.8, 9.8, 7.5); //posizionare il copri ruota anteriore in linea
     glRotatef(sterzo / 1.5, 0, 1, 0);
-    if (usecolor) glColor3f(1, 1, 1);     // colore rosso
+    if (usecolor) glColor3f(1, 1, 1);
     if (usecolor) setupPartTexture(copriRuota.bbmin, copriRuota.bbmax, 5);
-    copriRuota.RenderNxF();
+    copriRuota.RenderNxF(); // rendering della mesh usando normali per faccia
     glPopMatrix();
 }
 
+// funzione che disegna il faro anteriore della vespa
 void renderFaroAnteriore(bool usecolor, float sterzo) {
     glPushMatrix();
     glRotatef(sterzo / 1.5, 0, 1, 0);
     if (usecolor) glColor3f(0.8, 0.8, 0.8);     // colore grigio
     if (usecolor) setupPartTexture(faroAnteriore.bbmin, faroAnteriore.bbmax, 3);
-    faroAnteriore.RenderNxF();
+    faroAnteriore.RenderNxF(); // rendering della mesh usando normali per faccia
     glPopMatrix();
 }
 
-
+// funzione che disegna le ruote della vespa
 void renderRuote(bool usecolor, float sterzo, float mozzoA) {
     glPushMatrix();
     glScalef(0.90, 0.90, 0.90);
@@ -587,10 +531,10 @@ void renderRuote(bool usecolor, float sterzo, float mozzoA) {
     glTranslate(-wheelFR1.Center());
     if (usecolor) glColor3f(.6, .6, .6);
     if (usecolor) setupPartTexture(wheelFR1.bbmin, wheelFR1.bbmax, 0);
-    wheelFR1.RenderNxF(); // la ruota viene meglio FLAT SHADED - normali per faccia
+    wheelFR1.RenderNxF(); // rendering della mesh usando normali per faccia
     glDisable(GL_TEXTURE_2D);
     if (usecolor) glColor3f(0.9, 0.9, 0.9);
-    wheelFR2.RenderNxV();
+    wheelFR2.RenderNxV(); // rendering della mesh usando normali per vertice
     glPopMatrix();
 
     glPushMatrix();
@@ -601,18 +545,14 @@ void renderRuote(bool usecolor, float sterzo, float mozzoA) {
     glTranslate(-wheelBR1.Center());
     if (usecolor) glColor3f(.6, .6, .6);
     if (usecolor) setupPartTexture(wheelBR1.bbmin, wheelBR1.bbmax, 0);
-    wheelBR1.RenderNxF();
+    wheelBR1.RenderNxF(); // rendering della mesh usando normali per faccia
     glDisable(GL_TEXTURE_2D);
     if (usecolor) glColor3f(0.9, 0.9, 0.9);
-    wheelBR2.RenderNxV();
+    wheelBR2.RenderNxV(); // rendering della mesh usando normali per vertice
     glPopMatrix();
 }
 
-// funzione che disegna tutti i pezzi della macchina
-// (moto, + 4 route)
-// (da invocarsi due volte: per la macchina, e per la sua ombra)
-// (se usecolor e' falso, NON sovrascrive il colore corrente
-//  e usa quello stabilito prima di chiamare la funzione)
+// funzione che disegna la moto completa con tutti i suoi pezzi
 void Vespa::RenderAllParts(bool usecolor) const {
 
     // disegna la carliga con una mesh
@@ -636,30 +576,22 @@ void Vespa::RenderAllParts(bool usecolor) const {
     glPopMatrix();
 }
 
-// disegna a schermo
+// disegna a schermo la vespa
 void Vespa::Render() const {
     // sono nello spazio mondo
 
-    //drawAxis(); // disegno assi spazio mondo
-    //glPushMatrix();
 
     glTranslatef(px, py, pz);
     glRotatef(facing, 0, 1, 0);
-
-    // sono nello spazio MACCHINA
-    //drawAxis(); // disegno assi spazio macchina
 
     glPushMatrix();
     glRotatef(sterzo / 2, 0, 0, 1);
     glRotatef(sterzo / 1.5, 0, 1, 0);
     DrawHeadlight(0.1, 1.4, 0, 1, useHeadlight); // accendi faro anteriore centrale
     glPopMatrix();
-
-
     RenderAllParts(true);
 
-    // glPushMatrix();
-    // ombra!
+    // ombra
     if (useShadow) {
         glColor3f(0.1, 0.1, 0.1); // colore fisso
         glTranslatef(0, 0.01, 0); // alzo l'ombra di un epsilon per evitare z-fighting con il pavimento
@@ -669,8 +601,5 @@ void Vespa::Render() const {
         glColor3f(1, 1, 1);
         glEnable(GL_LIGHTING);
     }
-
     glPopMatrix();
-
-    // glPopMatrix();
 }
