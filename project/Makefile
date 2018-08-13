@@ -22,10 +22,10 @@ main.o: main.cpp
 vespa.o: vespa
 	$(CPP) -c vespa/vespa.cpp -o vespa/vespa.o
 
-mesh.o: mesh/mesh.cpp
+mesh.o: mesh
 	$(CPP) -c mesh/mesh.cpp -o mesh/mesh.o
 
-GLText.o: text/GLText.cpp
+GLText.o: text
 	$(CPP) -c text/GLText.cpp -o text/GLText.o
 
 run: $(BIN)

@@ -699,17 +699,17 @@ void RenderText(std::string message, SDL_Color color, int x, int y, TTF_Font *fo
 // render della schermata iniziale
 void renderingPreGame(SDL_Window *win) {
 
-    int w = scrW, h = scrH;
+
     fpsNow++;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glClearColor(0.9, 0.6, 0.2, 0.5);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    gluOrtho2D(0, w, 0, h);
+    gluOrtho2D(0, scrW, 0, scrH);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    RenderText("\"Vespa on the Road! - Time attack edition\"", colorBlack, w * 1 / 20 + 10, h - 70, font);
+    RenderText("\"Vespa on the Road! - Time attack edition\"", colorBlack, scrW * 1 / 2 -325, scrH - 70, font);
     string regole[7] = {
             "OBIETTIVO DEL GIOCO",
             "Il gioco consiste nel raggiungere il traguardo alla fine della strada nel minor tempo possibile.",
@@ -723,40 +723,39 @@ void renderingPreGame(SDL_Window *win) {
 
     for (int i = 0; i < 7; i++) {
         if (i == 0) {
-            RenderText(regole[i], colorBlack, w * 1 / 3, h - paddingTop + 20, font20);
+            RenderText(regole[i], colorBlack, scrW * 1 / 30, scrH - paddingTop + 20, font20);
         } else {
-            RenderText(regole[i], colorBlack, w * 1 / 30, h - paddingTop, font17);
+            RenderText(regole[i], colorBlack, scrW * 1 / 30, scrH - paddingTop, font17);
         }
         paddingTop += 25;
     }
     paddingTop += 30;
 
-    RenderText("Buon divertimento e batti il record!", colorBlack, w * 1 / 4, h - paddingTop, font20);
+    RenderText("Buon divertimento e batti il record!", colorBlack,  scrW * 1 / 2 -150, scrH - paddingTop, font20);
     //testo sui comandi del gioco
-    string instr[10] = {
+    string instr[7] = {
             "COMANDI DI GIOCO",
             "W   =  Accelerazione",
             "S   =  Freno/Retromarcia",
             "D   =  Destra",
             "S   =  Sinistra",
-            "<-  =  Ruota telecamera in senso orario",
-            "->  =  Ruota telecamera in senso antiorario",
-            "T   =  Reset della telecamera",
             "R   =  Ricominciare il gioco",
             "ESC =  Esci"};
-    paddingTop = 460;
-    for (int i = 0; i < 10; i++) {
+    paddingTop = 510;
+    for (int i = 0; i < 7; i++) {
         if (i == 0) {
-            RenderText(instr[i], colorBlack, w * 1 / 30, h - paddingTop + 20, font20);
-        } else {
-            RenderText(instr[i], colorBlack, w * 1 / 30, h - paddingTop, font17);
-        }
+            RenderText(instr[i], colorBlack, scrW * 1 / 30, scrH - paddingTop + 20, font20);
+
+        }else {
+                RenderText(instr[i], colorBlack, scrW * 1 / 30, scrH - paddingTop, font17);
+            }
+
 
         paddingTop += 25;
     }
     paddingTop += 40;
 
-    RenderText("Premere un tasto qualsiasi per iniziare a giocare!", colorBlack, w * 1 / 8, h - paddingTop, font20);
+    RenderText("Premere un tasto qualsiasi per iniziare a giocare!", colorBlack,  scrW * 1 / 2 -220, scrH - paddingTop -20, font20);
     glFinish();
     vespa.controller.startTimeCounting(); //il cronometro inizia dopo la chiusura della schermata iniziale
 
@@ -816,7 +815,7 @@ void displayTime() {
     double record = getRecordDaFile();
     string recordString = "Record: ";
     recordString.append(to_string(record));
-    RenderText(recordString, colorBlack, scrW - 300, scrH - 60, font);
+    RenderText(recordString, colorBlack, scrW - 340, scrH - 60, font);
 }
 
 //funzione che mostra in basso l'esito dell'impatto con il punto interrogativo
@@ -1213,8 +1212,12 @@ int main(int argc, char *argv[]) {
                     break;
                 case SDL_WINDOWEVENT:
                     // dobbiamo ridisegnare la finestra
-                    if (e.window.event == SDL_WINDOWEVENT_EXPOSED)
+                    if (e.window.event == SDL_WINDOWEVENT_EXPOSED){
+                        if(preGame){
+                            renderingPreGame(win);
+                        }
                         rendering(win);
+                    }
                     else {
                         windowID = SDL_GetWindowID(win);
                         if (e.window.windowID == windowID) {
@@ -1223,6 +1226,9 @@ int main(int argc, char *argv[]) {
                                     scrW = e.window.data1;
                                     scrH = e.window.data2;
                                     glViewport(0, 0, scrW, scrH);
+                                    if(preGame){
+                                        renderingPreGame(win);
+                                    }
                                     rendering(win);
                                     break;
                                 }

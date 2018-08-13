@@ -3,8 +3,8 @@
 ### Example user template
 
 # IntelliJ project files
-.idea
+../.idea
 *.iml
-cmake-build-debug
+project/cmake-build-debug
 CMakeLists.txt
 *o
