@@ -551,7 +551,6 @@ void drawRadar() {
     int y0 = 0, y1 = SIZE_FLOOR + 20;
     glPushMatrix();
 
-    //Indicatore Vespa
     glColor3f(1.0, 0, 0);
     glBegin(GL_TRIANGLES);
     int xVespa = 0;
@@ -597,6 +596,7 @@ void drawRadar() {
     glEnd();
     glRotatef(90, 1, 0, 0);
     glColor3f(1, 1, 1); //reset color
+
     glPopMatrix();
 }
 
@@ -709,7 +709,7 @@ void renderingPreGame(SDL_Window *win) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    RenderText("\"Vespa on the Road! - Time attack edition\"", colorBlack, scrW * 1 / 2 -325, scrH - 70, font);
+    RenderText("\"Vespa on the Road! - Time attack edition\"", colorBlack, scrW * 1 / 2 - 325, scrH - 70, font);
     string regole[7] = {
             "OBIETTIVO DEL GIOCO",
             "Il gioco consiste nel raggiungere il traguardo alla fine della strada nel minor tempo possibile.",
@@ -731,7 +731,7 @@ void renderingPreGame(SDL_Window *win) {
     }
     paddingTop += 30;
 
-    RenderText("Buon divertimento e batti il record!", colorBlack,  scrW * 1 / 2 -150, scrH - paddingTop, font20);
+    RenderText("Buon divertimento e batti il record!", colorBlack, scrW * 1 / 2 - 150, scrH - paddingTop, font20);
     //testo sui comandi del gioco
     string instr[7] = {
             "COMANDI DI GIOCO",
@@ -746,16 +746,17 @@ void renderingPreGame(SDL_Window *win) {
         if (i == 0) {
             RenderText(instr[i], colorBlack, scrW * 1 / 30, scrH - paddingTop + 20, font20);
 
-        }else {
-                RenderText(instr[i], colorBlack, scrW * 1 / 30, scrH - paddingTop, font17);
-            }
+        } else {
+            RenderText(instr[i], colorBlack, scrW * 1 / 30, scrH - paddingTop, font17);
+        }
 
 
         paddingTop += 25;
     }
     paddingTop += 40;
 
-    RenderText("Premere un tasto qualsiasi per iniziare a giocare!", colorBlack,  scrW * 1 / 2 -220, scrH - paddingTop -20, font20);
+    RenderText("Premere un tasto qualsiasi per iniziare a giocare!", colorBlack, scrW * 1 / 2 - 220,
+               scrH - paddingTop - 20, font20);
     glFinish();
     vespa.controller.startTimeCounting(); //il cronometro inizia dopo la chiusura della schermata iniziale
 
@@ -804,29 +805,45 @@ void salvaRecordSuFile(double record) {
     }
 }
 
+//funzione che mostra il time fino ai millesimi
+string timeFinoMillesimi(string tempo){
+    char tempoPreciso[tempo.length() + 1];
+    char tempoFinoMillesimi[tempo.length() - 3];
+    strcpy(tempoPreciso, tempo.c_str());
+    for (int i = 0; i < tempo.length() - 3; i++) {
+        tempoFinoMillesimi[i] = tempoPreciso[i];
+    }
+    tempoFinoMillesimi[tempo.length() - 3] = '\0';
+    string tempoMostrato(tempoFinoMillesimi);
+    return tempoMostrato;
+}
 
 //funzione che mostra in alto il tempo dell'attuale corsa e il record da battere
 void displayTime() {
-    SDL_Color colorBlack = {0, 0, 0, 0};
+
+    //tempo attuale
     string tempoAttuale = "Time: ";
     tempoAttuale.append(to_string(vespa.controller.getSeconds()));
-    RenderText(tempoAttuale, colorBlack, 50, scrH - 60, font);
 
+    RenderText(timeFinoMillesimi(tempoAttuale), colorBlack, 50, scrH - 60, font);
+
+    //record
     double record = getRecordDaFile();
     string recordString = "Record: ";
     recordString.append(to_string(record));
-    RenderText(recordString, colorBlack, scrW - 340, scrH - 60, font);
+
+    RenderText(timeFinoMillesimi(recordString), colorBlack, scrW - 300, scrH - 60, font);
 }
 
 //funzione che mostra in basso l'esito dell'impatto con il punto interrogativo
 void displayEsitoPuntoInterrogativo() {
     if (vespa.comandiInvertiti) {
-        RenderText("Sterzo invertito!", colorRed, scrW / 4, scrH / 20, font);
+        RenderText("Sterzo invertito!", colorRed, scrW / 2, scrH / 20, font);
     } else if (vespa.aumentaAcc) {
-        RenderText("La velocita' e' raddoppiata!", colorRed, scrW / 4, scrH / 20, font);
+        RenderText("Velocita' raddoppiata!", colorRed, scrW / 2, scrH / 20, font);
 
     } else if (vespa.diminuisciAcc) {
-        RenderText("La velocita' e' dimezzata!", colorRed, scrW / 4, scrH / 20, font);
+        RenderText("Velocita' dimezzata!", colorRed, scrW / 2, scrH / 20, font);
 
     }
 }
@@ -891,6 +908,7 @@ void rendering(SDL_Window *win) {
 
     }
     vespa.Render();
+
     if (useRadar) {
         SetCoordToPixel();
         drawRadar();
@@ -957,7 +975,7 @@ void renderingFineStrada(SDL_Window *win) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    RenderText("\"Vespa on the Road! - Time attack edition\"", colorBlack, w * 1 / 20 + 10, h - 70, font);
+    RenderText("\"Vespa on the Road! - Time attack edition\"", colorBlack, w * 1 / 2 -325, h - 70, font);
 
     //testo sul record del gioco
     string instr[5] = {
@@ -972,6 +990,7 @@ void renderingFineStrada(SDL_Window *win) {
         tempoPercorso = vespa.controller.getSeconds();
     }
     instr[0].append(to_string(tempoPercorso));
+    instr[0] = timeFinoMillesimi(instr[0]);
     instr[0].append(" secondi");
 
     //se vero hai stabilito un nuovo record
@@ -979,11 +998,13 @@ void renderingFineStrada(SDL_Window *win) {
         instr[1].append("Hai stabilito un nuovo record!");
         instr[2].append("Il record precedente era di: ");
         instr[2].append(to_string(record));
+        instr[2] = timeFinoMillesimi(instr[2]);
         instr[2].append(" secondi");
         salvaRecordSuFile(tempoPercorso);
     } else {
         instr[1].append("Il record del percorso e': ");
         instr[1].append(to_string(record));
+        instr[1] = timeFinoMillesimi(instr[1]);
         instr[1].append(" secondi");
         instr[2].append("Gioca nuovamente per cercare di battere il record!");
     }
@@ -1177,7 +1198,8 @@ int main(int argc, char *argv[]) {
             switch (e.type) {
                 case SDL_KEYDOWN:
                     vespa.controller.EatKey(e.key.keysym.sym, keymap, true);
-                    if (e.key.keysym.sym == SDLK_F1) cameraType = (cameraType + 1) % CAMERA_TYPE_MAX; //TODO vedere se mantenere le camere
+                    if (e.key.keysym.sym == SDLK_F1) cameraType = (cameraType + 1) %
+                                                                  CAMERA_TYPE_MAX; //TODO vedere se mantenere le camere
                     if (e.key.keysym.sym == SDLK_F2) useWireframe = !useWireframe;
                     if (e.key.keysym.sym == SDLK_F3) useRadar = !useRadar;
                     if (e.key.keysym.sym == SDLK_F4) useHeadlight = !useHeadlight;
@@ -1212,13 +1234,12 @@ int main(int argc, char *argv[]) {
                     break;
                 case SDL_WINDOWEVENT:
                     // dobbiamo ridisegnare la finestra
-                    if (e.window.event == SDL_WINDOWEVENT_EXPOSED){
-                        if(preGame){
+                    if (e.window.event == SDL_WINDOWEVENT_EXPOSED) {
+                        if (preGame) {
                             renderingPreGame(win);
                         }
                         rendering(win);
-                    }
-                    else {
+                    } else {
                         windowID = SDL_GetWindowID(win);
                         if (e.window.windowID == windowID) {
                             switch (e.window.event) {
@@ -1226,7 +1247,7 @@ int main(int argc, char *argv[]) {
                                     scrW = e.window.data1;
                                     scrH = e.window.data2;
                                     glViewport(0, 0, scrW, scrH);
-                                    if(preGame){
+                                    if (preGame) {
                                         renderingPreGame(win);
                                     }
                                     rendering(win);

@@ -78,7 +78,7 @@ void Vespa::Init() {
     velSterzo = 2.0;         // A
     velRitornoSterzo = 0.93; // B, sterzo massimo = A*B / (1-B)
 
-    accMax = 0.0015;
+    accMax = 0.0415;
 
     // attriti: percentuale di velocita' che viene mantenuta
     // 1 = no attrito
@@ -196,15 +196,16 @@ Mesh drawRoccia() {
     return roccia;
 }
 
-// applico la mia immagine al billboard a bordo strada
+// applico la mia immagine al billboard a fine strada
 void drawBillboardPoster() {
+    glPushMatrix();
     float billboardPoster[4][3] = {
             {27.7, 1.2, 0.9}, // lower sx vertex
             {20.4, 1.2, 0.9}, // lower dx vertex
             {27.7, 14,  0.9}, // higher sx vertex
             {20.4, 14,  0.9}, // higher dx vertex
     };
-
+    glTranslatef(-22.25,0,-246); //posizionare il poster sul billboard alla fine del percorso
     glPushMatrix();
     glEnable(GL_TEXTURE_2D);
     glColor4f(1, 1, 1, 1);
@@ -224,16 +225,17 @@ void drawBillboardPoster() {
     glEnd();
     glPopMatrix();
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE); // back to the default value of GL_TEXTURE_ENV_MODE
+    glPopMatrix();
 }
 
-// disegno il billboard a bordo strada
+// disegno il billboard a fine strada
 void drawBillboard() {
     glPushMatrix();
     glDisable(GL_LIGHTING);
     glColor3f(0.5, 0.5, 0.5);
     glScalef(3, 3, 3);
     setupPartTexture(billboard.bbmin, billboard.bbmax, 12);
-    glTranslatef(8, 0, 0);
+    glTranslatef(0.6,0,-82); // billboard a fine strada
     billboard.RenderNxV();
     glPopMatrix();
     glEnable(GL_LIGHTING);

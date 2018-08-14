@@ -10,84 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4bbe736a-e144-4810-94fc-cc4d240bd0b6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FreeSans.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/project/FreeSans.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/project/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cube/cube.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/cube/cube.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cube/cube.h" beforeDir="false" afterPath="$PROJECT_DIR$/project/cube/cube.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/asfalto.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/asfalto.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/billboard.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/billboard.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/copri.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/copri.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/gomma.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/gomma.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/lightF.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/lightF.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/miafoto.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/miafoto.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/question.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/question.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/racing_flag.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/racing_flag.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/racing_flag_baloon.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/racing_flag_baloon.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/rock.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/rock.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sand.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/sand.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sella.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/sella.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/sky_ok.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/sky_ok.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/skybox/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/skybox/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/skybox/bottom.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/skybox/bottom.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/skybox/front.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/skybox/front.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/skybox/left.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/skybox/left.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/skybox/right.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/skybox/right.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/skybox/top.png" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/skybox/top.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/vespa.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/vespa.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mesh/mesh.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/mesh/mesh.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mesh/mesh.h" beforeDir="false" afterPath="$PROJECT_DIR$/project/mesh/mesh.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mesh/point3.h" beforeDir="false" afterPath="$PROJECT_DIR$/project/mesh/point3.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/baloon.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/baloon.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/baloon.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/baloon.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/base_baloon.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/base_baloon.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/base_baloon.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/base_baloon.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/billboard.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/billboard.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/column.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/column.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/column.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/column.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/mario_box.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/mario_box.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/mario_box.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/mario_box.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/pista.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/pista.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/question_mark.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/question_mark.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/question_mark.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/question_mark.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/rock.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/rock.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/rock.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/rock.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/street_line.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/street_line.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_copri.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_copri.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_copri.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_copri.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_front_light.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_front_light.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_front_light.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_front_light.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_manubrio.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_manubrio.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_manubrio.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_manubrio.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_manubrio_p.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_manubrio_p.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_manubrio_p.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_manubrio_p.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_nowheels.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_nowheels.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_nowheels.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_nowheels.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_nowheels_nomanubrio.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_nowheels_nomanubrio.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_nowheels_nomanubrio.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_nowheels_nomanubrio.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_nowheels_nomanubrio_nocopri.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_nowheels_nomanubrio_nocopri.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_nowheels_nomanubrio_nocopri.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_nowheels_nomanubrio_nocopri.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_nowheels_nomanubrio_nocopri_nosella.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_nowheels_nomanubrio_nocopri_nosella.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_nowheels_nomanubrio_nocopri_nosella.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_nowheels_nomanubrio_nocopri_nosella.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_sella.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_sella.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_sella.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_sella.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_wheel_gomma.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_wheel_gomma.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_wheel_gomma.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_wheel_gomma.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_wheel_metal.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_wheel_metal.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_wheel_metal.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_wheel_metal.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_wheels.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_wheels.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_wheels.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_wheels.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_wheels_manubrio.mtl" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_wheels_manubrio.mtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vespa_wheels_manubrio.obj" beforeDir="false" afterPath="$PROJECT_DIR$/project/models/vespa_wheels_manubrio.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/moto_fisica" beforeDir="false" afterPath="$PROJECT_DIR$/project/moto_fisica" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/record.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/record.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/text/GLText.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/text/GLText.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/text/GLText.h" beforeDir="false" afterPath="$PROJECT_DIR$/project/text/GLText.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vespa/vespa.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/vespa/vespa.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vespa/vespa.h" beforeDir="false" afterPath="$PROJECT_DIR$/project/vespa/vespa.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/images/miafoto.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/project/images/miafoto.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/moto_fisica" beforeDir="false" afterPath="$PROJECT_DIR$/project/moto_fisica" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/record.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/record.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/vespa/vespa.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/vespa/vespa.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -100,15 +28,16 @@
     <session id="1476076434">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.15" value="1" />
+          <entry key="project.open.time.28" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -132,7 +61,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Makefile" value="10" />
-          <entry key="cpp" value="2834" />
+          <entry key="cpp" value="3952" />
           <entry key="css" value="12" />
           <entry key="html" value="207" />
           <entry key="txt" value="61" />
@@ -144,7 +73,7 @@
           <entry key="CSS" value="12" />
           <entry key="HTML" value="207" />
           <entry key="Makefile" value="10" />
-          <entry key="ObjectiveC" value="2834" />
+          <entry key="ObjectiveC" value="3952" />
           <entry key="PLAIN_TEXT" value="60" />
         </counts>
       </usages-collector>
@@ -155,8 +84,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/vespa/vespa.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="593" column="12" selection-start-line="593" selection-start-column="12" selection-end-line="593" selection-end-column="12" />
+            <state relative-caret-position="122">
+              <caret line="80" column="17" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="17" />
               <folding>
                 <element signature="e#136#182#0" expanded="true" />
               </folding>
@@ -164,26 +93,24 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/project/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="817" column="50" selection-start-line="817" selection-start-column="50" selection-end-line="817" selection-end-column="50" />
+            <state relative-caret-position="198">
+              <caret line="977" column="89" selection-start-line="977" selection-start-column="89" selection-end-line="977" selection-end-column="89" />
+              <folding>
+                <element signature="e#320#344#0" expanded="true" />
+                <element signature="e#23526#23538#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doc/relazione.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
-              <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
-              <folding>
-                <element signature="e#209#235#0" expanded="true" />
-                <element signature="e#268#294#0" expanded="true" />
-                <element signature="e#351#377#0" expanded="true" />
-                <element signature="e#420#446#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="272">
+              <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -191,17 +118,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doc/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/record.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="7" selection-start-column="7" selection-end-column="7" />
+            <state relative-caret-position="323">
+              <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -217,6 +135,11 @@
       <find>postS</find>
       <find>camera</find>
       <find>COMANDI</find>
+      <find>billboard</find>
+      <find>radar</find>
+      <find>GL_LI</find>
+      <find>Record:</find>
+      <find>record</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -232,9 +155,10 @@
         <option value="$PROJECT_DIR$/vespa/vespa.cpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/project/record.txt" />
-        <option value="$PROJECT_DIR$/project/main.cpp" />
         <option value="$PROJECT_DIR$/doc/style.css" />
         <option value="$PROJECT_DIR$/doc/relazione.html" />
+        <option value="$PROJECT_DIR$/project/vespa/vespa.cpp" />
+        <option value="$PROJECT_DIR$/project/main.cpp" />
       </list>
     </option>
   </component>
@@ -350,22 +274,24 @@
       <workItem from="1533902260265" duration="8082000" />
       <workItem from="1533972897630" duration="10990000" />
       <workItem from="1534147660942" duration="4603000" />
+      <workItem from="1534179006921" duration="287000" />
+      <workItem from="1534229808654" duration="3823000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27753000" />
+    <option name="totallyTimeSpent" value="31939000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26627535" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27588046" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3297414" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3297414" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -421,39 +347,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project/main.cpp">
+    <entry file="file://$PROJECT_DIR$/doc/relazione.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="817" column="50" selection-start-line="817" selection-start-column="50" selection-end-line="817" selection-end-column="50" />
+        <state relative-caret-position="272">
+          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/doc/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="4" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
+        <state relative-caret-position="323">
+          <caret line="19" column="14" selection-start-line="19" selection-start-column="14" selection-end-line="19" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/project/vespa/vespa.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="593" column="12" selection-start-line="593" selection-start-column="12" selection-end-line="593" selection-end-column="12" />
+        <state relative-caret-position="122">
+          <caret line="80" column="17" selection-start-line="80" selection-start-column="17" selection-end-line="80" selection-end-column="17" />
           <folding>
             <element signature="e#136#182#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/doc/relazione.html">
+    <entry file="file://$PROJECT_DIR$/project/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+        <state relative-caret-position="198">
+          <caret line="977" column="89" selection-start-line="977" selection-start-column="89" selection-end-line="977" selection-end-column="89" />
           <folding>
-            <element signature="e#209#235#0" expanded="true" />
-            <element signature="e#268#294#0" expanded="true" />
-            <element signature="e#351#377#0" expanded="true" />
-            <element signature="e#420#446#0" expanded="true" />
+            <element signature="e#320#344#0" expanded="true" />
+            <element signature="e#23526#23538#0" expanded="true" />
           </folding>
         </state>
       </provider>
