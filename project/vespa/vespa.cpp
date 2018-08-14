@@ -78,7 +78,7 @@ void Vespa::Init() {
     velSterzo = 2.0;         // A
     velRitornoSterzo = 0.93; // B, sterzo massimo = A*B / (1-B)
 
-    accMax = 0.0415;
+    accMax = 0.0015;
 
     // attriti: percentuale di velocita' che viene mantenuta
     // 1 = no attrito
@@ -120,11 +120,11 @@ void drawLineaStradale() {
     glScalef(0.1, 1, FLOOR_LIMIT + 0.03);
     glPushMatrix();
     glTranslatef(-100, 0.001, 0);
-    striscia.RenderNxV();
+    striscia.RenderNxF();
     glPopMatrix();
     glPushMatrix();
     glTranslatef(125, 0.001, 0);
-    striscia.RenderNxV();
+    striscia.RenderNxF();
     glPopMatrix();
     glPopMatrix();
     glEnable(GL_LIGHTING);
@@ -170,6 +170,7 @@ void drawPalloncini() {
     glTranslatef(0, -28, 0);
     baseBaloon.RenderNxF();
     glPopMatrix();
+
     glPushMatrix();
     glRotatef(90, 0, 1, 0);
     glTranslatef(FLOOR_LIMIT - 5, 28, +FINE_STRADA);
@@ -236,7 +237,7 @@ void drawBillboard() {
     glScalef(3, 3, 3);
     setupPartTexture(billboard.bbmin, billboard.bbmax, 12);
     glTranslatef(0.6,0,-82); // billboard a fine strada
-    billboard.RenderNxV();
+    billboard.RenderNxF();
     glPopMatrix();
     glEnable(GL_LIGHTING);
 }
@@ -536,7 +537,7 @@ void renderRuote(bool usecolor, float sterzo, float mozzoA) {
     wheelFR1.RenderNxF(); // rendering della mesh usando normali per faccia
     glDisable(GL_TEXTURE_2D);
     if (usecolor) glColor3f(0.9, 0.9, 0.9);
-    wheelFR2.RenderNxV(); // rendering della mesh usando normali per vertice
+    wheelFR2.RenderNxF(); // rendering della mesh usando normali per faccia
     glPopMatrix();
 
     glPushMatrix();
@@ -550,14 +551,14 @@ void renderRuote(bool usecolor, float sterzo, float mozzoA) {
     wheelBR1.RenderNxF(); // rendering della mesh usando normali per faccia
     glDisable(GL_TEXTURE_2D);
     if (usecolor) glColor3f(0.9, 0.9, 0.9);
-    wheelBR2.RenderNxV(); // rendering della mesh usando normali per vertice
+    wheelBR2.RenderNxF(); // rendering della mesh usando normali per faccia
     glPopMatrix();
 }
 
 // funzione che disegna la moto completa con tutti i suoi pezzi
 void Vespa::RenderAllParts(bool usecolor) const {
 
-    // disegna la carliga con una mesh
+    // disegna la vespa con una mesh
     glPushMatrix();
     if (usecolor) glEnable(GL_LIGHTING);
 

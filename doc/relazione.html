@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+        }
+
+        /* Clearfix (clear floats) */
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="style.css">
     <title>Vespa on the road!</title>
 </head>
@@ -8,15 +26,35 @@
 <body>
 
 <h1> Vespa on the road! - Time attack edition</h1>
-<center><h3> <span style="font-weight:normal">Relazione sul progetto del corso di "Grafica"</span></h3></center>
+<center><h3><span style="font-weight:normal">Relazione sul progetto del corso di "Grafica"</span></h3></center>
 <br>
 <h3> Professore: <span style="font-weight:normal">Giulio Casciola</span></h3>
-<h3> Anno Accademico: <span style="font-weight:normal">2017/2018</span> </h3>
-<h3> Autore: <span style="font-weight:normal">Pierluigi Lazazzera</span> </h3>
+<h3> Anno Accademico: <span style="font-weight:normal">2017/2018</span></h3>
+<h3> Autore: <span style="font-weight:normal">Pierluigi Lazazzera</span></h3>
 
-<br><br>
+<br><br><br>
 
-<h2>Introduzione</h2>
+<font size="6"><b><a name="menu">Menù</a></b></font>
+<ul>
+    <li><a href="#introduzione">Introduzione</a></li>
+    <li><a href="#regole">Regole del gioco</a></li>
+    <li><a href="#comandi">Comandi</a></li>
+    <li><a href="#trasformazioni">Trasformazioni in OpenGL</a></li>
+    <li><a href="#luci">Luci</a></li>
+    <li><a href="#radar">Radar</a></li>
+    <li><a href="#time">Time</a></li>
+    <li><a href="#ombre">Ombre</a></li>
+    <li><a href="#skybox">Skybox</a></li>
+    <li><a href="#mesh">Mesh</a></li>
+    <li><a href="#texture">Texture</a></li>
+    <li><a href="#sabbia">Tempesta di sabbia</a></li>
+    <li><a href="#conclusioni">Conclusioni</a></li>
+
+
+</ul>
+
+<br>
+<h2><a name="introduzione">Introduzione</a></h2>
 <p> L'obiettivo del progetto è la realizzazione di un semplice videogioco del tipo "automotive 3d game" che racchiuda le
     principali argomentazioni affrontate nel corso.
     Il software è pensato per ambiente UNIX e sviluppato con il linguaggio C++, utilizzandolo col paradigma ad oggetti.
@@ -35,6 +73,175 @@
 <br>
 <img src="images/intro.jpg">
 <h5>1. Schermata del gioco</h5>
+<h4><a href="#menu">Torna al menù</a></h4>
+<br><br>
+
+
+<h2><a name="regole">Regole del gioco</a></h2>
+<p> Lo scopo del gioco è quello di raggiungere con la vespa il traguardo, situato alla fine della strada, nel minor
+    tempo possibile, evitando
+    le rocce che comportano la fine del gioco. In caso di fuoripista la velocità della vespa verrà dimezzata fino al
+    rientro di essa in pista.<br>
+    Vi sono presenti, inoltre, 3 punti interrogativi che, se colpiti, possono causare in maniera totalmente randomica:
+<ul>
+    <li>Inversione del comando dello sterzo</li>
+    <li>Dimezzamento della velocita</li>
+    <li>Raddoppio della velocita</li>
+</ul>
+Qualora si arrivi al traguardo in un tempo minore del record (inizialmente settato a 60 secondi), questo tempo
+effettuato verrà
+salvato e diventerà il nuovo record da battere.
+</p>
+<br>
+<h4><a href="#menu">Torna al menù</a></h4>
+<br><br>
+
+
+<h2><a name="comandi">Comandi</a></h2>
+<p> I comandi principali sono i seguenti:
+<ul>
+    <li><b>W</b> per accelerare</li>
+    <li><b>S</b> per retromarcia/freno</li>
+    <li><b>A</b> per girare a sinistra</li>
+    <li><b>D</b> per girare a destra</li>
+    <li><b>R</b> per ricominciare il gioco</li>
+    <li><b><-</b> per girare la camera in senso orario (verso sinistra)</li>
+    <li><b>-></b> per girare la camera in senso antiorario (verso destra)</li>
+    <li><b>T</b> per resettare la camera</li>
+    <li><b>ESC</b> per uscire dal gioco</li>
+
+</ul>
+Altri comandi sono:
+<ul>
+    <li><b>F1</b> per attivare/disattivare la modalità Wireframe</li>
+    <li><b>F2</b> per attivare/disattivare il radar</li>
+    <li><b>F3</b> per attivare/disattivare il fanale anteriore della vespa</li>
+    <li><b>F4</b> per attivare/disattivare le ombre (vespa e punti interrogativi)</li>
+    <li><b>F5</b> per attivare la "tempesta di sabbia" nel gioco</li>
+</ul>
+E' possibile inoltre muovere la camera tenendo premuto il tasto sinistro del mouse e muovendolo nella direzione che si
+preferisce.
+</p>
+<br>
+<h4><a href="#menu">Torna al menù</a></h4>
+<br><br>
+
+
+<h2><a name="trasformazioni">Trasformazioni in OpenGL</a></h2>
+<p>
+    Il funzionamento delle trasformazioni geometriche e la loro gestione nelle librerie OpenGL è stato fondamentale da
+    capire per svolgere il progetto. Per ogni vertice si ha lo scopo di mappare coordinate mondo in coordinate
+    schermo del device, su cui verrà rappresentata la scena di gioco. In ordine rispetto a come le troviamo nel codice
+    sono state effettuate le seguenti trasformazioni:
+<ol>
+    <li>Le trasformazioni Window-Viewport sono gestite automaticamente dalla libreria. Nel progetto è stato necessario
+        settare la Viewport tramite la chiamata <i>glViewPort</i>, la quale setta il numero corretto di pixel nel Frame
+        Buffer.
+    </li>
+    <li>Le trasformazioni di proiezione, lavorando sulla matrice PROJECTION, decretano un volume di vista, dove la
+        porzione di scena che rientra all'interno di questo verrà deformata e rappresentata in coordinate 2D sul device
+        di output. Nel progetto è stata adottata una traformazione prospettica, la quale crea un cono avente la punta
+        nell'obbiettivo della Camera. Questo setting viene specificato nella chiamata <i>gluPerspective</i>.
+    </li>
+    <li>
+        Le trasformazioni di modellazione hanno l'obiettivo di ricavare le coordinate mondo di un particolare
+        oggetto/vertice ed agiscono sulla matrice MODELVIEW. Solitamente sono composta dalle chiamate <i>glScale</i>,
+        <i>glRotate</i> e
+        <i>glTranslate</i>, nell'ordine specificato, e comprese tra un <i>glPushMatrix</i> e <i>glPopMatrix</i> per
+        circoscrivere la trasformazione di modellazione ad un particolare elemento.
+    </li>
+</ol>
+</p>
+<br>
+<h4><a href="#menu">Torna al menù</a></h4>
+<br><br>
+
+
+<h2><a name="luci">Luci</a></h2>
+<p> L'illuminazione è affidata principalmente all'alternarsi di 2 luci, ovvero una luce persistente ad illuminare il
+    mondo e il fanale della vespa. La luce che illumina il mondo è permanentemente accesa, posta in alto (mezzogiorno)
+    tramite l'opzione <i>GL_POSITION</i> della chiamata <i>glLightfv</i>.</p>
+<p> I fari della vespa sono attivati tramite il pulsante F3 della tastiera, richiamando la funzione <i>DrawHeadlight</i>
+    della classe <i>Vespa</i>. Questa si preoccupa di accendere una luce direzionale verso l'asse z negativo, del
+    sistema di
+    riferimento dell'auto, con un angolo di illuminazione di 30°. Quest'ultima caratteristica è rappresentabile tramite
+    il parametro <i>GL_SPOT_CUTOFF</i>, reso disponibile da OpenGL stesso.</p>
+<div class="row">
+    <div class="column">
+        <img src="images/faroSi.jpg" alt="FaroSi" style="width:100%">
+        <h5>2. Vespa con faro anteriore acceso</h5>
+    </div>
+    <div class="column">
+        <img src="images/faroNo.jpg" alt="FaroNo" style="width:100%">
+        <h5>3. Vespa con faro anteriore spento</h5>
+    </div>
+</div>
+<h4><a href="#menu">Torna al menù</a></h4>
+<br><br>
+
+
+<h2><a name="radar">Radar</a></h2>
+<p>Il radar è riquadro fatto da geometrie, disegnate a schermo in 2D in basso a sinistra, con lo scopo di
+    orientare l'utente all'interno del mondo di gioco ed è attivabile/disattivabile con il tasto F2. L'utente è così in
+    grado di capire velocemente quanto disti dal traguardo (rappresentato dalla bandiera a scacchi) e se è eventualmente
+    uscito dalla strada principale. La posizione della vespa, rappresentata dal triangolo rosso e dell'arrivo sono tutte
+    proporzionate tra la lunghezza della finestra radar e la lunghezza reale della pista, in modo da rendere veritiera
+    la distanza dal traguardo. I calcoli e l'implementazione del Radar sono affidate al metodo <i>drawRadar</i> del file
+    <i>main.cpp</i>.
+</p>
+<br>
+<img src="images/radar.jpg">
+<h5>4. Radar</h5>
+<h4><a href="#menu">Torna al menù</a></h4>
+<br><br>
+
+
+<h2><a name="time">Time</a></h2>
+<p>In ogni istante della partita il giocatore può controllare il tempo che sta ottenendo e può sempre vedere qual è il
+    record in vigore. Entrambi questi tempi vengono mostrati in alto ed il metodo che permette ciò è <i>RenderText</i>
+    della classe <i>main.cpp.</i>
+</p>
+<br>
+<img src="images/time.jpg">
+<h5>5. In alto a sx il tempo corrente, a dx il record</h5>
+<h4><a href="#menu">Torna al menù</a></h4>
+<br><br>
+
+
+<h2><a name="ombre">Ombre</a></h2>
+<p>
+    L'implementazione delle ombre riguarda principalmente due oggetti come la vespa e il punto interrogativo. Si può
+    attivare/disattivare l'effetto ombra con il tasto F4. In pratica viene creato nuovamente l'oggetto, come se
+    dovessimo rappresentarlo nuovamente nella schermata, ma non viene applicata alcuna texture, viene appiattito
+    completamente sull'asse Y nella chiamata <i>glScalef</i>, durante la trasformazione di modellazione e colorato di
+    grigio scuro.
+</p>
+<br>
+<div class="row">
+    <div class="column">
+        <img src="images/ombraSi.jpg" alt="OmbraSi" style="width:100%">
+        <h5>6. Ombra presente</h5>
+    </div>
+    <div class="column">
+        <img src="images/ombraNo.jpg" alt="OmbraNo" style="width:100%">
+        <h5>7. Ombra assente</h5>
+    </div>
+</div>
+<h4><a href="#menu">Torna al menù</a></h4>
+<br><br>
+
+
+<h2><a name="skybox">Skybox</a></h2>
+<p>In ogni istante della partita il giocatore può controllare il tempo che sta ottenendo e può sempre vedere qual è il
+    record in vigore. Entrambi questi tempi vengono mostrati in alto ed il metodo che permette ciò è <i>RenderText</i>
+    della classe <i>main.cpp.</i>
+</p>
+<br>
+<img src="images/time.jpg">
+<h5>5. In alto a sx il tempo corrente, a dx il record</h5>
+<h4><a href="#menu">Torna al menù</a></h4>
+<br><br>
+
 
 </body>
 </html>

@@ -427,23 +427,6 @@ double *setCameraPreSky() {
 // setto camera iniziale
 void setCameraPostSky(double px, double py, double pz) {
     glTranslatef(-px, -py - 1.5, -pz);
-
-    //TODO vedere se mettere le altre camere (con rotazione da vedere)
-    /* switch (cameraType) {
-         case CAMERA_MOUSE:
-             glTranslatef(-px, -py - 1.5, -pz);
-             break;
-         case CAMERA_BACK_CAR:
-             glTranslatef(-px, -py - 1.5, -pz - 3);
-             break;
-         case CAMERA_PILOT:
-             glTranslatef(-px, -py , -pz+3);
-             break;
-         case CAMERA_TOP_CAR:
-             glTranslatef(-px+30, -py , -pz);
-             break;
-     }*/
-
 }
 
 // simulo una tempesta di sabbia
@@ -455,77 +438,6 @@ void tempestaSabbia() {
     glFogf(GL_FOG_END, 14.0);
     glClearColor(0.5, 0.5, 0.5, 1.0);
 }
-
-/* //TODO vedere se eliminare, penso di si
-// setto la posizione della camera
-void setCamera() {
-
-    double px = vespa.px;
-    double py = vespa.py;
-    double pz = vespa.pz;
-    double angle = vespa.facing;
-    double cosf = cos(angle * M_PI / 180.0);
-    double sinf = sin(angle * M_PI / 180.0);
-    double camd, camh, ex, ey, ez, cx, cy, cz;
-    double cosff, sinff;
-
-// controllo la posizione della camera a seconda dell'opzione selezionata
-    switch (cameraType) {
-        case CAMERA_BACK_CAR:
-            camd = 4.5;
-            camh = 2;
-            ex = px + camd * sinf;
-            ey = py + camh;
-            ez = pz + camd * cosf;
-            cx = px - camd * sinf;
-            cy = py + camh;
-            cz = pz - camd * cosf;
-            gluLookAt(ex, ey, ez, cx, cy, cz, 0.0, 1.0, 0.0);
-            break;
-        case CAMERA_TOP_FIXED:
-            camd = 0.5;
-            camh = 0.55;
-            angle = vespa.facing + 40.0;
-            cosff = cos(angle * M_PI / 180.0);
-            sinff = sin(angle * M_PI / 180.0);
-            ex = px + camd * sinff;
-            ey = py + camh;
-            ez = pz + camd * cosff;
-            cx = px - camd * sinf;
-            cy = py + camh;
-            cz = pz - camd * cosf;
-            gluLookAt(ex, ey, ez, cx, cy, cz, 0.0, 1.0, 0.0);
-            break;
-        case CAMERA_TOP_CAR:
-            camd = 2.5;
-            camh = 1.0;
-            ex = px + camd * sinf;
-            ey = py + camh;
-            ez = pz + camd * cosf;
-            cx = px - camd * sinf;
-            cy = py + camh;
-            cz = pz - camd * cosf;
-            gluLookAt(ex, ey + 5, ez, cx, cy, cz, 0.0, 1.0, 0.0);
-            break;
-        case CAMERA_PILOT:
-            camd = 0.2;
-            camh = 0.55;
-            ex = px + camd * sinf;
-            ey = py + camh;
-            ez = pz + camd * cosf;
-            cx = px - camd * sinf;
-            cy = py + camh;
-            cz = pz - camd * cosf;
-            gluLookAt(ex, ey, ez, cx, cy, cz, 0.0, 1.0, 0.0);
-            break;
-        case CAMERA_MOUSE:
-            glTranslatef(0, 0, -eyeDist);
-            glRotatef(viewBeta, 1, 0, 0);
-            glRotatef(viewAlpha, 0, 1, 0);
-
-            break;
-    }
-}*/
 
 // disegno la bandiera a scacchi nel radar
 void drawFinishFlagRadar() {
@@ -714,7 +626,7 @@ void renderingPreGame(SDL_Window *win) {
             "OBIETTIVO DEL GIOCO",
             "Il gioco consiste nel raggiungere il traguardo alla fine della strada nel minor tempo possibile.",
             "Vi sono presenti degli ostacoli da evitare (rocce) che altrimenti comportano la fine del gioco.",
-            "Vi sono presenti 3 blocchi con i punti interrogativi che possono:",
+            "Vi sono presenti 3 punti interrogativi che possono:",
             "    1) Invertire il comando dello sterzo (A diventa D e viceversa)",
             "    2) Dimezzare la velocita'",
             "    3) Raddoppiare la velocita'"
@@ -1198,13 +1110,11 @@ int main(int argc, char *argv[]) {
             switch (e.type) {
                 case SDL_KEYDOWN:
                     vespa.controller.EatKey(e.key.keysym.sym, keymap, true);
-                    if (e.key.keysym.sym == SDLK_F1) cameraType = (cameraType + 1) %
-                                                                  CAMERA_TYPE_MAX; //TODO vedere se mantenere le camere
-                    if (e.key.keysym.sym == SDLK_F2) useWireframe = !useWireframe;
-                    if (e.key.keysym.sym == SDLK_F3) useRadar = !useRadar;
-                    if (e.key.keysym.sym == SDLK_F4) useHeadlight = !useHeadlight;
-                    if (e.key.keysym.sym == SDLK_F5) useShadow = !useShadow;
-                    if (e.key.keysym.sym == SDLK_F6) useSabbiaTempesta = !useSabbiaTempesta;
+                    if (e.key.keysym.sym == SDLK_F1) useWireframe = !useWireframe;
+                    if (e.key.keysym.sym == SDLK_F2) useRadar = !useRadar;
+                    if (e.key.keysym.sym == SDLK_F3) useHeadlight = !useHeadlight;
+                    if (e.key.keysym.sym == SDLK_F4) useShadow = !useShadow;
+                    if (e.key.keysym.sym == SDLK_F5) useSabbiaTempesta = !useSabbiaTempesta;
 
                     if (e.key.keysym.sym == SDLK_ESCAPE) done = 1;
 
