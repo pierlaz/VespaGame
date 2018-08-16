@@ -33,7 +33,18 @@ img {
     border-radius: 8px;
 }
 
+p {
+    margin: 50px;
+}
 
 ul {
-    text-align: left;
+    margin: 50px;
+
+    text-align: justify;
+}
+
+ol {
+    margin: 50px;
+
+    text-align: justify;
 }
