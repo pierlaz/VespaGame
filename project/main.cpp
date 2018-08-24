@@ -38,6 +38,7 @@ using namespace std;
 #define ZROCCIA 215
 
 //vari font
+TTF_Font *font45;
 TTF_Font *font;
 TTF_Font *font26;
 TTF_Font *font20;
@@ -52,7 +53,7 @@ SDL_Color colorWhite = {255, 255, 255, 255};
 
 float viewAlpha = 0, viewBeta = 20; // angoli che definiscono la vista
 float eyeDist = 5.0; // distanza dell'occhio dall'origine
-int scrH = 750, scrW = 750; // altezza e larghezza viewport (in pixels)
+int scrH = 1080, scrW = 1980; // altezza e larghezza viewport (in pixels)
 bool useWireframe = false;
 bool useRadar = false;
 bool useHeadlight = false;
@@ -462,6 +463,8 @@ void drawRadar() {
     int x0 = 0, x1 = SIZE_FLOOR;
     int y0 = 0, y1 = SIZE_FLOOR + 20;
     glPushMatrix();
+    glDisable(GL_LIGHTING);
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE); //iluminare radar
 
     glColor3f(1.0, 0, 0);
     glBegin(GL_TRIANGLES);
@@ -508,8 +511,11 @@ void drawRadar() {
     glEnd();
     glRotatef(90, 1, 0, 0);
     glColor3f(1, 1, 1); //reset color
+    glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
     glPopMatrix();
+
+
 }
 
 //funzione che disegna le rocce
@@ -856,10 +862,13 @@ void renderingGameOver(SDL_Window *win) {
             "Premi 'R' per ricominciare il gioco. ",
             "Premi 'ESC' per uscire ..."
     };
-    int paddingTop = 100;
+    int paddingTop = 150;
 
-    for (int i = 0; i < 6; i++) {
-        RenderText(instr[i], colorWhite, w * 1 / 15, h - paddingTop + 20, font);
+    RenderText(instr[0], colorWhite, w * 1 / 2.3, h - paddingTop - 20, font45);
+    paddingTop +=150;
+
+    for (int i = 1; i < 6; i++) {
+        RenderText(instr[i], colorWhite, w * 1 / 15, h - paddingTop - 20, font);
         //aumento padding prima dell'ultima frase
         if (i == 5) {
             paddingTop += 250;
@@ -1066,6 +1075,7 @@ int main(int argc, char *argv[]) {
     glPolygonOffset(1, 1); // indietro di 1
 
     //caricamento font
+    font45 = TTF_OpenFont("FreeSans.ttf", 45);
     font = TTF_OpenFont("FreeSans.ttf", 35);
     font26 = TTF_OpenFont("FreeSans.ttf", 26);
     font20 = TTF_OpenFont("FreeSans.ttf", 20);
@@ -1179,7 +1189,7 @@ int main(int argc, char *argv[]) {
                     }
                     break;
 
-                    //TODO ELIMINARE
+               /*     //TODO ELIMINARE
                 case SDL_MOUSEWHEEL:
                     if (!preGame) {
                         if (e.wheel.y > 0) {
@@ -1192,7 +1202,7 @@ int main(int argc, char *argv[]) {
                             eyeDist = eyeDist / 0.9;
                         };
                     }
-                    break;
+                    break;*/
             }
         } else {
             // nessun evento: siamo IDLE
