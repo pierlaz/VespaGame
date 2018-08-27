@@ -35,7 +35,7 @@
     <br><br><br>
 
     <p>
-    <font size="6"><b><a name="menu">Menù</a></b></font>
+        <font size="6"><b><a name="menu">Menù</a></b></font>
     </p>
     <ul>
         <li><a href="#introduzione">Introduzione</a></li>
@@ -111,15 +111,15 @@
     <p> I comandi principali sono i seguenti:
     </p>
     <ul>
-    <li><b>W</b> per accelerare</li>
-    <li><b>S</b> per retromarcia/freno</li>
-    <li><b>A</b> per girare a sinistra</li>
-    <li><b>D</b> per girare a destra</li>
-    <li><b>R</b> per ricominciare il gioco</li>
-    <li><b><-</b> per girare la camera in senso orario (verso sinistra)</li>
-    <li><b>-></b> per girare la camera in senso antiorario (verso destra)</li>
-    <li><b>T</b> per resettare la camera</li>
-    <li><b>ESC</b> per uscire dal gioco</li>
+        <li><b>W</b> per accelerare</li>
+        <li><b>S</b> per retromarcia/freno</li>
+        <li><b>A</b> per girare a sinistra</li>
+        <li><b>D</b> per girare a destra</li>
+        <li><b>R</b> per ricominciare il gioco</li>
+        <li><b><-</b> per girare la camera in senso orario (verso sinistra)</li>
+        <li><b>-></b> per girare la camera in senso antiorario (verso destra)</li>
+        <li><b>T</b> per resettare la camera</li>
+        <li><b>ESC</b> per uscire dal gioco</li>
     </ul>
     <p>
         Altri comandi sono:
@@ -144,17 +144,13 @@
     <h2><a name="trasformazioni">Trasformazioni in OpenGL</a></h2>
     <p>
         Il funzionamento delle trasformazioni geometriche e la loro gestione nelle librerie OpenGL è stato fondamentale
-        da
-        capire per svolgere il progetto. Per ogni vertice si ha lo scopo di mappare coordinate mondo in coordinate
+        da capire per svolgere il progetto. Per ogni vertice si ha lo scopo di mappare coordinate mondo in coordinate
         schermo del device, su cui verrà rappresentata la scena di gioco. In ordine rispetto a come le troviamo nel
-        codice
-        sono state effettuate le seguenti trasformazioni:
+        codice sono state effettuate le seguenti trasformazioni:
     <ol>
         <li>Le trasformazioni Window-Viewport sono gestite automaticamente dalla libreria. Nel progetto è stato
-            necessario
-            settare la Viewport tramite la chiamata <i>glViewPort</i>, la quale setta il numero corretto di pixel nel
-            Frame
-            Buffer.
+            necessario settare la Viewport tramite la chiamata <i>glViewPort</i>, la quale setta il numero corretto di
+            pixel nel Frame Buffer.
         </li>
         <li>Le trasformazioni di proiezione, lavorando sulla matrice PROJECTION, decretano un volume di vista, dove la
             porzione di scena che rientra all'interno di questo verrà deformata e rappresentata in coordinate 2D sul
@@ -162,6 +158,11 @@
             di output. Nel progetto è stata adottata una traformazione prospettica, la quale crea un cono avente la
             punta
             nell'obbiettivo della Camera. Questo setting viene specificato nella chiamata <i>gluPerspective</i>.
+        </li>
+        <li>
+            Le trasformazioni di vista agiscono sempre sulla matrice MODELVIEW ed hanno il compito di posizionare la
+            scena davanti alla Camera. Nel progetto è possibile muovere la camera sia con il tasto sx del mouse, che con
+            le frecce sx e dx.
         </li>
         <li>
             Le trasformazioni di modellazione hanno l'obiettivo di ricavare le coordinate mondo di un particolare
@@ -186,7 +187,7 @@
         <i>DrawHeadlight</i>
         della classe <i>Vespa</i>. Questa si preoccupa di accendere una luce direzionale verso l'asse z negativo, del
         sistema di
-        riferimento dell'auto, con un angolo di illuminazione di 30°. Quest'ultima caratteristica è rappresentabile
+        riferimento della vespa, con un angolo di illuminazione di 30°. Quest'ultima caratteristica è rappresentabile
         tramite
         il parametro <i>GL_SPOT_CUTOFF</i>, reso disponibile da OpenGL stesso.</p>
     <div class="row">
@@ -287,14 +288,16 @@
         <li> Billboard</li>
     </ul>
     <p>
-    La classe <i>Mesh</i> si preoccupa del reperimento dei dati da file .obj esterni tramite la funzione
-    <i>LoadFromObj</i> e della renderizzazione tramite le differenti tecniche NormalixFaccia o NormalixVertice. Gli
-    oggetti
-    sono stati caricati su Blender e "divisi" in modo tale da applicare le trasformazioni di OpenGL direttamente sulle
-    parti
-    degli oggetti di interesse. Per la vespa, ad esempio, sono stati staccati dall'oggetto originale varie componenti
-    come
-    lo sterzo, le ruote, per simulare in maniera migliore i movimenti.
+        La classe <i>Mesh</i> si preoccupa del reperimento dei dati da file .obj esterni tramite la funzione
+        <i>LoadFromObj</i> e della renderizzazione tramite le differenti tecniche NormalixFaccia o NormalixVertice. Gli
+        oggetti
+        sono stati caricati su Blender e "divisi" in modo tale da applicare le trasformazioni di OpenGL direttamente
+        sulle
+        parti
+        degli oggetti di interesse. Per la vespa, ad esempio, sono stati staccati dall'oggetto originale varie
+        componenti
+        come
+        lo sterzo, le ruote, per simulare in maniera migliore i movimenti.
     </p>
     <p>
         Sono state applicate 2 tecniche di shading nel progetto, il <i>Gouraud Shading</i> (fornito appunto dal metodo

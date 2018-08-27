@@ -453,22 +453,22 @@ void Vespa::DrawHeadlight(float x, float y, float z, int lightN, bool useHeadlig
         glEnable(usedLight);
 
         float col0[4] = {0.8, 0.8, 0.0, 1};
-        glLightfv(usedLight, GL_DIFFUSE, col0);
+        glLightfv(usedLight, GL_DIFFUSE, col0); //luce faro
 
         float col1[4] = {0.5, 0.5, 0.0, 1};
-        glLightfv(usedLight, GL_AMBIENT, col1);
+        glLightfv(usedLight, GL_AMBIENT, col1); //luce ambientale
 
         float tmpPos[4] = {x, y, z, 1}; // ultima comp=1 => luce posizionale
         glLightfv(usedLight, GL_POSITION, tmpPos);
 
-        float tmpDir[4] = {0, 0, -1, 0}; // ultima comp=1 => luce posizionale
+        float tmpDir[4] = {0, -0.5, -1, 0}; // ultima comp=1 => luce posizionale
         glLightfv(usedLight, GL_SPOT_DIRECTION, tmpDir);
 
         glLightf(usedLight, GL_SPOT_CUTOFF, 30);
         glLightf(usedLight, GL_SPOT_EXPONENT, 5);
 
         glLightf(usedLight, GL_CONSTANT_ATTENUATION, 0);
-        glLightf(usedLight, GL_LINEAR_ATTENUATION, 1);
+        glLightf(usedLight, GL_LINEAR_ATTENUATION, 0.5);
     } else
         glDisable(usedLight);
 }
@@ -590,7 +590,8 @@ void Vespa::Render() const {
     glPushMatrix();
     glRotatef(sterzo / 2, 0, 0, 1);
     glRotatef(sterzo / 1.5, 0, 1, 0);
-    DrawHeadlight(0.1, 1.4, 0, 1, useHeadlight); // accendi faro anteriore centrale
+    DrawHeadlight(0.1, 1.6, 0, 1, useHeadlight); // accendi faro anteriore centrale
+
     glPopMatrix();
     RenderAllParts(true);
 

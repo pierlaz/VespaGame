@@ -24,13 +24,6 @@ using namespace std;
 #include "mesh/mesh.h"
 #include "text/GLText.h"
 
-
-#define CAMERA_BACK_CAR 3
-#define CAMERA_TOP_CAR 1
-#define CAMERA_PILOT 2
-#define CAMERA_MOUSE 0
-#define CAMERA_TYPE_MAX 4
-
 #define FINE_STRADA 10
 #define SIZE_FLOOR 250
 #define K_FLOOR 200
@@ -77,7 +70,6 @@ extern void drawBillboard();
 
 extern void drawBillboardPoster();
 
-int cameraType = 0;
 Vespa vespa; // la nostra macchina
 
 int nstep = 0; // numero di passi di FISICA fatti fin'ora
@@ -841,7 +833,6 @@ void rendering(SDL_Window *win) {
     SDL_GL_SwapWindow(win);
 }
 
-//TODO
 void renderingGameOver(SDL_Window *win) {
     int w = scrW, h = scrH;
     fpsNow++;
@@ -882,8 +873,6 @@ void renderingGameOver(SDL_Window *win) {
     SDL_GL_SwapWindow(win);
 }
 
-
-//TODO
 void renderingFineStrada(SDL_Window *win) {
 
     int w = scrW, h = scrH;
@@ -1189,7 +1178,7 @@ int main(int argc, char *argv[]) {
                     }
                     break;
 
-               /*     //TODO ELIMINARE
+               /*     //disattivato per lo skybox
                 case SDL_MOUSEWHEEL:
                     if (!preGame) {
                         if (e.wheel.y > 0) {
