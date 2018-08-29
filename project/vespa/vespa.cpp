@@ -601,7 +601,7 @@ void Vespa::Render() const {
         glTranslatef(0, 0.01, 0); // alzo l'ombra di un epsilon per evitare z-fighting con il pavimento
         glScalef(1.01, 0, 1.01);  // appiattisco sulla Y, ingrandisco dell'1% sulla Z e sulla X
         glDisable(GL_LIGHTING); // niente lighing per l'ombra
-        RenderAllParts(false);  // disegno la macchina appiattita
+        RenderAllParts(false);  // disegno la vespa appiattita
         glColor3f(1, 1, 1);
         glEnable(GL_LIGHTING);
     }

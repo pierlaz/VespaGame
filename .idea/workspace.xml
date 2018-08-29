@@ -11,10 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4bbe736a-e144-4810-94fc-cc4d240bd0b6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doc/relazione.html" beforeDir="false" afterPath="$PROJECT_DIR$/doc/relazione.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/doc.tar.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/project/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/project/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/moto_fisica" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/cube/cube.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/cube/cube.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/project/record.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/record.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/vespa/vespa.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/project/vespa/vespa.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -28,7 +29,7 @@
     <session id="1476076434">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="10" />
+          <entry key="project.closed" value="11" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.15" value="1" />
@@ -38,18 +39,18 @@
           <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="12" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="13" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="Makefile" value="2" />
-          <entry key="cpp" value="4" />
+          <entry key="cpp" value="5" />
           <entry key="css" value="1" />
           <entry key="h" value="1" />
           <entry key="html" value="2" />
-          <entry key="txt" value="4" />
+          <entry key="txt" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -58,17 +59,17 @@
           <entry key="CSS" value="1" />
           <entry key="HTML" value="2" />
           <entry key="Makefile" value="1" />
-          <entry key="ObjectiveC" value="5" />
-          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="ObjectiveC" value="6" />
+          <entry key="PLAIN_TEXT" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Makefile" value="57" />
-          <entry key="cpp" value="4275" />
+          <entry key="Makefile" value="66" />
+          <entry key="cpp" value="4280" />
           <entry key="css" value="69" />
           <entry key="html" value="4633" />
-          <entry key="txt" value="69" />
+          <entry key="txt" value="77" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -76,9 +77,9 @@
           <entry key="CMakeLists.txt" value="1" />
           <entry key="CSS" value="69" />
           <entry key="HTML" value="4633" />
-          <entry key="Makefile" value="57" />
-          <entry key="ObjectiveC" value="4275" />
-          <entry key="PLAIN_TEXT" value="68" />
+          <entry key="Makefile" value="66" />
+          <entry key="ObjectiveC" value="4280" />
+          <entry key="PLAIN_TEXT" value="76" />
         </counts>
       </usages-collector>
     </session>
@@ -88,8 +89,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/vespa/vespa.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="592" column="83" lean-forward="true" selection-start-line="592" selection-start-column="83" selection-end-line="592" selection-end-column="83" />
+            <state relative-caret-position="368">
+              <caret line="603" column="51" selection-start-line="603" selection-start-column="51" selection-end-line="603" selection-end-column="51" />
               <folding>
                 <element signature="e#136#182#0" expanded="true" />
               </folding>
@@ -98,10 +99,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/project/record.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="7" selection-start-column="7" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/vespa/vespa.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="460">
-              <caret line="58" column="16" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
+              <caret line="58" column="13" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -109,8 +119,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="807" column="11" lean-forward="true" selection-start-line="807" selection-end-line="808" />
+            <state relative-caret-position="20570">
+              <caret line="1212" column="13" selection-start-line="1212" selection-start-column="13" selection-end-line="1212" selection-end-column="13" />
               <folding>
                 <element signature="e#320#344#0" expanded="true" />
               </folding>
@@ -121,25 +131,25 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/mesh/mesh.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="116" column="4" lean-forward="true" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/Makefile">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+            <state relative-caret-position="-2522">
+              <caret line="116" column="4" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/project/Makefile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doc/relazione.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
+            <state relative-caret-position="3213">
               <caret line="189" column="31" selection-start-line="189" selection-start-column="31" selection-end-line="189" selection-end-column="31" />
             </state>
           </provider>
@@ -148,7 +158,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/doc/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="538">
+            <state relative-caret-position="833">
               <caret line="49" selection-start-line="49" selection-end-line="49" />
             </state>
           </provider>
@@ -199,12 +209,12 @@
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/vespa/vespa.cpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
-        <option value="$PROJECT_DIR$/project/record.txt" />
         <option value="$PROJECT_DIR$/doc/style.css" />
-        <option value="$PROJECT_DIR$/project/Makefile" />
         <option value="$PROJECT_DIR$/project/main.cpp" />
-        <option value="$PROJECT_DIR$/project/vespa/vespa.cpp" />
         <option value="$PROJECT_DIR$/doc/relazione.html" />
+        <option value="$PROJECT_DIR$/project/record.txt" />
+        <option value="$PROJECT_DIR$/project/vespa/vespa.cpp" />
+        <option value="$PROJECT_DIR$/project/Makefile" />
       </list>
     </option>
   </component>
@@ -227,7 +237,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -238,35 +247,7 @@
             <path>
               <item name="vespa" type="b2602c69:ProjectViewProjectNode" />
               <item name="vespa" type="462c0819:PsiDirectoryNode" />
-              <item name="cmake-build-debug" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="vespa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="vespa" type="462c0819:PsiDirectoryNode" />
-              <item name="doc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="vespa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="vespa" type="462c0819:PsiDirectoryNode" />
-              <item name="doc" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="vespa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="vespa" type="462c0819:PsiDirectoryNode" />
               <item name="project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="vespa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="vespa" type="462c0819:PsiDirectoryNode" />
-              <item name="project" type="462c0819:PsiDirectoryNode" />
-              <item name="mesh" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="vespa" type="b2602c69:ProjectViewProjectNode" />
-              <item name="vespa" type="462c0819:PsiDirectoryNode" />
-              <item name="project" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="vespa" type="b2602c69:ProjectViewProjectNode" />
@@ -278,6 +259,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -352,11 +334,12 @@
       <workItem from="1534422186221" duration="633000" />
       <workItem from="1535110138384" duration="3553000" />
       <workItem from="1535352796804" duration="8080000" />
+      <workItem from="1535554960342" duration="2478000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60770000" />
+    <option name="totallyTimeSpent" value="63852000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -371,12 +354,12 @@
     <frame x="0" y="-1" width="1920" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.291889" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29829243" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3297414" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3297414" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -418,65 +401,68 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project/record.txt">
+    <entry file="file://$PROJECT_DIR$/doc/relazione.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="6" selection-start-column="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/vespa/vespa.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="58" column="16" selection-start-line="58" selection-start-column="16" selection-end-line="58" selection-end-column="16" />
+        <state relative-caret-position="3213">
+          <caret line="189" column="31" selection-start-line="189" selection-start-column="31" selection-end-line="189" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/doc/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
+        <state relative-caret-position="833">
           <caret line="49" selection-start-line="49" selection-end-line="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="807" column="11" lean-forward="true" selection-start-line="807" selection-end-line="808" />
-          <folding>
-            <element signature="e#320#344#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/mesh/mesh.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="116" column="4" lean-forward="true" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/project/vespa/vespa.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="592" column="83" lean-forward="true" selection-start-line="592" selection-start-column="83" selection-end-line="592" selection-end-column="83" />
+        <state relative-caret-position="368">
+          <caret line="603" column="51" selection-start-line="603" selection-start-column="51" selection-end-line="603" selection-end-column="51" />
           <folding>
             <element signature="e#136#182#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/doc/relazione.html">
+    <entry file="file://$PROJECT_DIR$/project/record.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="189" column="31" selection-start-line="189" selection-start-column="31" selection-end-line="189" selection-end-column="31" />
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/vespa/vespa.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="58" column="13" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20570">
+          <caret line="1212" column="13" selection-start-line="1212" selection-start-column="13" selection-end-line="1212" selection-end-column="13" />
+          <folding>
+            <element signature="e#320#344#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/cube/cube.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/mesh/mesh.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2522">
+          <caret line="116" column="4" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
         </state>
       </provider>
     </entry>

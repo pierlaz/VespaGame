@@ -2,7 +2,7 @@
 
 CPP  = g++
 BIN  = vespaGame
-OBJ  = main.o vespa/vespa.o mesh/mesh.o cube/cube.o text/GLText.o
+OBJ  = main.o vespa/vespa.o mesh/mesh.o text/GLText.o
 LIBS = -lGL -lGLU -lglut -lSDL2 -lSDL2_image -lm -lSDL2_ttf
 
 #FLAG = -w
